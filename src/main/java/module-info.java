@@ -4,9 +4,10 @@ module rdid.studentssys {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
-    // requires org.junit.jupiter;
     requires junit;
 
     opens rdid.studentssys to javafx.fxml;
     exports rdid.studentssys;
+    opens rdid.studentssys.controller to javafx.fxml;
+    exports rdid.studentssys.controller;
 }

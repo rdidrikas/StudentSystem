@@ -2,6 +2,7 @@ package rdid.studentssys;
 
 import org.junit.Test;
 import rdid.studentssys.model.Group;
+import rdid.studentssys.model.GroupManager;
 import rdid.studentssys.model.Student;
 
 import java.time.LocalDate;
@@ -22,7 +23,7 @@ public class TestStudentSystem {
         assertEquals("Doe", student.getSurname());
         assertEquals("johndoe@gmail.com", student.getEmail());
         assertEquals(0, student.getId());
-        assertNotNull(student.getGroup());
+        assertEquals(student.getGroup().get(0).getGroupName(), "Default Group");
     }
 
     @Test
@@ -47,5 +48,7 @@ public class TestStudentSystem {
         // Check if attendance was marked correctly
         assertTrue(student.getAttendance().containsKey(LocalDate.now()));
         assertTrue(student.getAttendance().get(LocalDate.now()));
+
+        System.out.println(GroupManager.getInstance().getAllGroups().get(0).getStudents().get(0));
     }
 }

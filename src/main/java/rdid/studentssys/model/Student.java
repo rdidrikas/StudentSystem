@@ -17,7 +17,7 @@ public class Student {
         this.surname = surname;
         this.email = email;
         this.groups = new ArrayList<>();
-        this.groups.add(GroupManager.getInstance().getDefaultGroup()); // Adding student to default group
+        GroupManager.getInstance().getDefaultGroup().addStudent(this); // Adding student to default group and add default group to groups
     }
 
     public void markAttendance(LocalDate date, boolean present) {
@@ -83,6 +83,13 @@ public class Student {
             }
         } else {
             System.out.println("Group cannot be null.");
+        }
+    }
+
+    public void setAttendance(Map<LocalDate, Boolean> attendance) {
+        this.attendance = attendance;
+        for (Group group : groups) {
+            group.updateAttendance(this, attendance);
         }
     }
 
