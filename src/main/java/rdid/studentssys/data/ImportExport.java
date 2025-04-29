@@ -1,7 +1,9 @@
 package rdid.studentssys.data;
 
+import java.util.List;
+
 public interface ImportExport {
-    void importData(String filePath);
+    List<String[]> importData(String filePath);
     void exportData(String filePath);
 
     // void importGroups(String filePath);

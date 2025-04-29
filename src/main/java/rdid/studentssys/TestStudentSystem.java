@@ -4,8 +4,10 @@ import org.junit.Test;
 import rdid.studentssys.model.Group;
 import rdid.studentssys.model.GroupManager;
 import rdid.studentssys.model.Student;
+import rdid.studentssys.data.CSVhandler;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 import static org.junit.Assert.*;
@@ -50,5 +52,13 @@ public class TestStudentSystem {
         assertTrue(student.getAttendance().get(LocalDate.now()));
 
         System.out.println(GroupManager.getInstance().getAllGroups().get(0).getStudents().get(0));
+    }
+    @Test
+    public void testData(){
+        CSVhandler csvHandler = new CSVhandler();
+        String filePath = "src/main/resources/test.csv";
+        List<String[]> data = csvHandler.importData(filePath);
+        assertNotNull(data);
+        csvHandler.studentCSVData(data);
     }
 }

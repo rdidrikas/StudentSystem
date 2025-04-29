@@ -1,10 +1,12 @@
 package rdid.studentssys.data;
 
+import java.util.List;
+
 public class Excelhandler implements ImportExport {
     @Override
-    public void importData(String filePath) {
-
+    public List<String[]> importData(String filePath) {
         System.out.println("Importing data from " + filePath);
+        return null;
     }
 
     @Override

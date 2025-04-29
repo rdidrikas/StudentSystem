@@ -20,6 +20,24 @@ public class Student {
         GroupManager.getInstance().getDefaultGroup().addStudent(this); // Adding student to default group and add default group to groups
     }
 
+    public Student(int id, String name, String surname, String email, String[] groupArr) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.groups = new ArrayList<>();
+        for(String group : groupArr) {
+            if(GroupManager.getInstance().getGroupByName(group) != null) {
+                GroupManager.getInstance().getGroupByName(group).addStudent(this);
+                groups.add(GroupManager.getInstance().getGroupByName(group));
+            } else {
+                GroupManager.getInstance().createGroup(group);
+                GroupManager.getInstance().getGroupByName(group).addStudent(this);
+                groups.add(GroupManager.getInstance().getGroupByName(group));
+            }
+        }
+    }
+
     public void markAttendance(LocalDate date, boolean present) {
         if (attendance == null) {
             attendance = new HashMap<>();

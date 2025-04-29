@@ -41,8 +41,63 @@
                            <Button minWidth="150" onAction="#handleEditGroupsButton" text="Edit Groups" />
                         </children>
                      </VBox>
-                     <Button onAction="#handleImportDataButton" text="Import Data" />
-                      <Button onAction="#handleExportDataButton" text="Export Data" />
+                      <Button onAction="#toggleImportMenu" text="Import Data" />
+                      <VBox fx:id="subImportSidebar" managed="false" visible="false">
+                        <padding>
+                            <Insets left="20.0" />
+                        </padding>
+                        <children>
+                           <Button minWidth="150" onAction="#toggleImportCSVMenu" text="Import with CSV" />
+                            <VBox fx:id="subImportCSVSidebar" managed="false" visible="false">
+                                <padding>
+                                    <Insets left="20.0" />
+                                </padding>
+                                <children>
+                                     <Button minWidth="150" onAction="#handleImportCSVStudents" text="Import Students" />
+                                    <Button minWidth="150" onAction="#handleImportCSVGroups" text="Import Groups" />
+                                </children>
+                            </VBox>
+                           <Button minWidth="150" onAction="#toggleImportExcelMenu" text="Import with Excel" />
+                            <VBox fx:id="subImportExcelSidebar" managed="false" visible="false">
+                                <padding>
+                                    <Insets left="20.0" />
+                                </padding>
+                                <children>
+                                    <Button minWidth="150" onAction="#handleImportExcelStudents" text="Import Students" />
+                                    <Button minWidth="150" onAction="#handleImportExcelGroups" text="Export Groups" />
+                                </children>
+                            </VBox>
+                        </children>
+                      </VBox>
+                      <Button onAction="#toggleExportMenu" text="Export Data" />
+                      <VBox fx:id="subExportSidebar" managed="false" visible="false">
+                          <padding>
+                              <Insets left="20.0" />
+                          </padding>
+                          <children>
+                              <Button minWidth="150" onAction="#toggleExportCSVMenu" text="Export with CSV" />
+                              <VBox fx:id="subExportCSVSidebar" managed="false" visible="false">
+                                  <padding>
+                                      <Insets left="20.0" />
+                                  </padding>
+                                  <children>
+                                      <Button minWidth="150" onAction="#handleExportCSVStudents" text="Export Students" />
+                                      <Button minWidth="150" onAction="#handleExportCSVGroups" text="Export Groups" />
+                                  </children>
+                              </VBox>
+                              <Button minWidth="150" onAction="#toggleExportExcelMenu" text="Export with Excel" />
+                              <VBox fx:id="subExportExcelSidebar" managed="false" visible="false">
+                                  <padding>
+                                      <Insets left="20.0" />
+                                  </padding>
+                                  <children>
+                                      <Button minWidth="150" onAction="#handleExportExcelStudents" text="Export Students" />
+                                      <Button minWidth="150" onAction="#handleExportExcelGroups" text="Export Groups" />
+                                  </children>
+                              </VBox>
+                          </children>
+                      </VBox>
+
                   </children>
             </VBox>
             <Button layoutX="20.0" layoutY="25.0" onAction="#toggleMenu" text="☰" />

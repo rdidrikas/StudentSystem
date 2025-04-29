@@ -11,14 +11,16 @@ import javafx.util.Duration;
 
 public class HomeController {
 
-    @FXML
-    private Button studentsButton;
-    @FXML
-    private VBox sidebar;
-    @FXML
-    private VBox subGroupsSidebar;
-    @FXML
-    private VBox subStudentsSidebar;
+    @FXML private Button studentsButton;
+    @FXML private VBox sidebar;
+    @FXML private VBox subGroupsSidebar;
+    @FXML private VBox subStudentsSidebar;
+    @FXML private VBox subImportSidebar;
+    @FXML private VBox subExportSidebar;
+    @FXML private VBox subImportCSVSidebar;
+    @FXML private VBox subImportExcelSidebar;
+    @FXML private VBox subExportCSVSidebar;
+    @FXML private VBox subExportExcelSidebar;
 
 
     private void toggleVisibility(VBox menu) {
@@ -40,9 +42,9 @@ public class HomeController {
             });
         } else {
             // Prepare menu first
+            menu.setTranslateX(-menu.getWidth()); // start off-screen
             menu.setVisible(true);
             menu.setManaged(true);
-            menu.setTranslateX(-menu.getWidth()); // start off-screen
             menu.setOpacity(0);
             // Slide menu in
             slideTransition.setToX(0); // move to normal position
@@ -53,67 +55,109 @@ public class HomeController {
         fadeTransition.play();
     }
 
-    @FXML
-    public void toggleMenu() {
+    @FXML public void toggleMenu() {
         toggleVisibility(sidebar);
     }
 
-    @FXML
-    public void toggleStudentsMenu() {
+    @FXML public void toggleStudentsMenu() {
         toggleVisibility(subStudentsSidebar);
     }
 
-    @FXML
-    public void toggleGroupsMenu() {
+    @FXML public void toggleGroupsMenu() {
         toggleVisibility(subGroupsSidebar);
     }
 
+    @FXML public void toggleImportMenu() {
+        toggleVisibility(subImportSidebar);
+    }
 
-    @FXML
-    public void handleAddStudentButton() {
+    @FXML public void toggleExportMenu() {
+        toggleVisibility(subExportSidebar);
+    }
+
+    @FXML public void toggleImportCSVMenu() {
+        toggleVisibility(subImportCSVSidebar);
+    }
+
+    @FXML public void toggleImportExcelMenu() {
+        toggleVisibility(subImportExcelSidebar);
+    }
+
+    @FXML public void toggleExportExcelMenu() {
+        toggleVisibility(subExportExcelSidebar);
+    }
+
+    @FXML public void toggleExportCSVMenu() {
+        toggleVisibility(subExportCSVSidebar);
+    }
+
+    @FXML public void handleAddStudentButton() {
         // Handle add student button click
         System.out.println("Add Student button clicked");
     }
 
-    @FXML
-    public void handleViewStudentButton(){
+    @FXML public void handleViewStudentButton(){
         System.out.println("View Student button clicked");
     }
 
-    @FXML
-    public void handleEditStudentsButton() {
+    @FXML public void handleEditStudentsButton() {
         // Handle manage groups button click
         System.out.println("Manage Groups button clicked");
     }
 
-    @FXML
-    public void handleAddGroupButton() {
+    @FXML public void handleAddGroupButton() {
         // Handle add group button click
         System.out.println("Add Group button clicked");
     }
 
-    @FXML
-    public void handleViewGroupsButton(){
+    @FXML public void handleViewGroupsButton(){
         // Handle view group button click
         System.out.println("View Group button clicked");
     }
 
-    @FXML
-    public void handleEditGroupsButton() {
+    @FXML public void handleEditGroupsButton() {
         // Handle manage groups button click
         System.out.println("Manage Groups button clicked");
     }
 
-
-    @FXML
-    public void handleImportDataButton() {
-        // Handle import data button click
-        System.out.println("Import Data button clicked");
+    @FXML public void handleImportCSVStudents(){
+        // Handle import students button click
+        System.out.println("Import Students button clicked");
     }
 
-    @FXML
-    public void handleExportDataButton() {
+    @FXML public void handleImportExcelStudents(){
+        // Handle import students button click
+        System.out.println("Import Students button clicked");
+    }
+
+    @FXML public void handleExportCSVStudents() {
         // Handle export data button click
-        System.out.println("Export Data button clicked");
+        System.out.println("Export Students button clicked");
     }
+
+    @FXML public void handleExportExcelStudents() {
+        // Handle export data button click
+        System.out.println("Export Students button clicked");
+    }
+
+    @FXML public void handleImportCSVGroups(){
+        // Handle import students button click
+        System.out.println("Import Groups button clicked");
+    }
+
+    @FXML public void handleImportExcelGroups(){
+        // Handle import students button click
+        System.out.println("Import Groups button clicked");
+    }
+
+    @FXML public void handleExportCSVGroups() {
+        // Handle export data button click
+        System.out.println("Export Groups button clicked");
+    }
+
+    @FXML public void handleExportExcelGroups() {
+        // Handle export data button click
+        System.out.println("Export Groups button clicked");
+    }
+
 }
