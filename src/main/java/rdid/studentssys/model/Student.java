@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class Student {
+    private static int idCounter = 0;
     private final int id;
     private String name;
     private String surname;
@@ -11,8 +12,8 @@ public class Student {
     private List<Group> groups;
     private Map<LocalDate, Boolean> attendance;
 
-    public Student(int id, String name, String surname, String email) {
-        this.id = id;
+    public Student(String name, String surname, String email) {
+        this.id = ++idCounter;
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -20,8 +21,8 @@ public class Student {
         GroupManager.getInstance().getDefaultGroup().addStudent(this); // Adding student to default group and add default group to groups
     }
 
-    public Student(int id, String name, String surname, String email, String[] groupArr) {
-        this.id = id;
+    public Student(String name, String surname, String email, String[] groupArr) {
+        this.id = ++idCounter;
         this.name = name;
         this.surname = surname;
         this.email = email;

@@ -32,22 +32,14 @@ public class CSVhandler implements ImportExport {
 
     public void studentCSVData(List<String[]> data) {
         for (String[] row : data) {
-            int id;
-            try {
-                id = Integer.parseInt(row[0]);
-            }
-            catch (NumberFormatException e) {
-                System.out.println("Invalid ID format: " + row[0]);
-                continue;
-            }
             String name = row[1];
             String surname = row[2];
             String email = row[3];
             String[] groupArr = Arrays.copyOfRange(row, 4, row.length);
             if(groupArr[0].isEmpty()){
-                new Student(id, name, surname, email);
+                new Student(name, surname, email);
             } else {
-                new Student(id, name, surname, email, groupArr);
+                new Student(name, surname, email, groupArr);
             }
         }
         List<Group> allGroups = GroupManager.getInstance().getAllGroups();

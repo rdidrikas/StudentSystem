@@ -16,21 +16,21 @@ class StudentTest {
     @DisplayName("Test if the default group is created correctly")
     public void testCreateStudent() {
         // Create a new student
-        Student student = new Student(0, "John", "Doe", "johndoe@gmail.com");
+        Student student = new Student("John", "Doe", "johndoe@gmail.com");
 
         // Test if the student is created correctly
         assertNotNull(student);
         assertEquals("John", student.getName());
         assertEquals("Doe", student.getSurname());
         assertEquals("johndoe@gmail.com", student.getEmail());
-        assertEquals(0, student.getId());
+        assertEquals(1, student.getId());
         assertNotNull(student.getGroup());
     }
 
     @Test
     public void testAddStudentToGroup() {
         // Create student and group
-        Student student = new Student(1, "John", "Doe", "johndoe@gmail.com");
+        Student student = new Student("John", "Doe", "johndoe@gmail.com");
         Group group = new Group("Math Group");
 
         // Add student to group
@@ -43,7 +43,7 @@ class StudentTest {
     @Test
     public void testAttendance() {
         // Create student and mark attendance
-        Student student = new Student(2, "John", "Doe", "johndoe@gmail.com");
+        Student student = new Student("John", "Doe", "johndoe@gmail.com");
         student.markAttendance(LocalDate.now(), true);
 
         // Check if attendance was marked correctly
