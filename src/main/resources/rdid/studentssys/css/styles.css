@@ -1,106 +1,28 @@
-/* Base styles */
+
 .root {
-    -fx-font-family: "Segoe UI";
-    -fx-base: #3498db;  /* Primary color */
-    -fx-background-color: #f5f6fa;  /* Light background */
+    -fx-background-color: black;
+    -fx-text-fill: white;
 }
 
-/* Buttons */
+.label {
+    -fx-text-fill: white;
+}
+
 .button {
-    -fx-background-radius: 5px;
-    -fx-padding: 8px 16px;
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-radius: 5;
+    -fx-font-size: 15;
 }
-
 
 .button:hover {
-    -fx-cursor: hand;
-    -fx-opacity: 0.9;
-}
-
-.primary-button {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
-}
-
-.success-button {
-    -fx-background-color: #2ecc71;
-    -fx-text-fill: white;
-}
-
-.danger-button {
-    -fx-background-color: #e74c3c;
-    -fx-text-fill: white;
-}
-
-/* Tables */
-.table-view {
     -fx-background-color: white;
-    -fx-border-radius: 5px;
-    -fx-border-color: #dcdde1;
+    -fx-text-fill: black;
 }
 
-.table-row-cell:odd {
-    -fx-background-color: #f8f9fa;
-}
-
-.table-row-cell:selected {
-    -fx-background-color: #3498db;
+#HomeName {
     -fx-text-fill: white;
-}
-
-.table-column-header {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
+    -fx-font-size: 20;
     -fx-font-weight: bold;
 }
-
-/* Text fields */
-.text-field, .combo-box {
-    -fx-background-radius: 5px;
-    -fx-border-color: #dcdde1;
-    -fx-border-radius: 5px;
-    -fx-padding: 6px;
-}
-
-/* Labels */
-.label {
-    -fx-text-fill: #2d3436;
-}
-
-.title {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2d3436;
-}
-
-/* Navigation bar */
-.nav-bar {
-    -fx-background-color: #3498db;
-    -fx-padding: 12px;
-    -fx-spacing: 15px;
-}
-
-.nav-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-border-radius: 5px;
-}
-
-.nav-button:hover {
-    -fx-background-color: rgba(255,255,255,0.1);
-}
-
-/* Error messages */
-.error-label {
-    -fx-text-fill: #e74c3c;
-    -fx-font-weight: bold;
-}
-
-/* Utility classes */
-.padding-10 { -fx-padding: 10px; }
-.margin-top-20 { -fx-margin-top: 20px; }
-.text-center { -fx-alignment: center; }
-.text-right { -fx-alignment: center-right; }
