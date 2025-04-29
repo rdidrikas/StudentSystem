@@ -12,29 +12,35 @@ public class Student {
     private List<Group> groups;
     private Map<LocalDate, Boolean> attendance;
 
+    private static List<Student> students = new ArrayList<>();
+
     public Student(String name, String surname, String email) {
-        this.id = ++idCounter;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.groups = new ArrayList<>();
-        GroupManager.getInstance().getDefaultGroup().addStudent(this); // Adding student to default group and add default group to groups
+        if(!containsStudent(name, surname, email)) { // No duplicates
+            this.id = ++idCounter;
+            this.name = name;
+            this.surname = surname;
+            this.email = email;
+            this.groups = new ArrayList<>();
+            GroupManager.getInstance().getDefaultGroup().addStudent(this); // Adding student to default group and add default group to groups
+        }
     }
 
     public Student(String name, String surname, String email, String[] groupArr) {
-        this.id = ++idCounter;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.groups = new ArrayList<>();
-        for(String group : groupArr) {
-            if(GroupManager.getInstance().getGroupByName(group) != null) {
-                GroupManager.getInstance().getGroupByName(group).addStudent(this);
-                groups.add(GroupManager.getInstance().getGroupByName(group));
-            } else {
-                GroupManager.getInstance().createGroup(group);
-                GroupManager.getInstance().getGroupByName(group).addStudent(this);
-                groups.add(GroupManager.getInstance().getGroupByName(group));
+        if(!containsStudent(name, surname, email)) { // No duplicates
+            this.id = ++idCounter;
+            this.name = name;
+            this.surname = surname;
+            this.email = email;
+            this.groups = new ArrayList<>();
+            for(String group : groupArr) {
+                if(GroupManager.getInstance().getGroupByName(group) != null) {
+                    GroupManager.getInstance().getGroupByName(group).addStudent(this);
+                    groups.add(GroupManager.getInstance().getGroupByName(group));
+                } else {
+                    GroupManager.getInstance().createGroup(group);
+                    GroupManager.getInstance().getGroupByName(group).addStudent(this);
+                    groups.add(GroupManager.getInstance().getGroupByName(group));
+                }
             }
         }
     }
@@ -47,6 +53,15 @@ public class Student {
         for (Group group : groups) {
             group.updateAttendance(this, attendance);
         }
+    }
+
+    private boolean containsStudent(String name, String surname, String email) {
+        for (Student student : students) {
+            if (student.name.equals(name) && student.surname.equals(surname) && student.email.equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Getters and setters
@@ -76,6 +91,10 @@ public class Student {
             return null;
         }
         return groups;
+    }
+
+    public static final List<Student> getAllStudents() {
+        return students;
     }
 
     public void setName(String name) {

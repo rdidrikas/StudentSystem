@@ -56,7 +56,7 @@ public class TestStudentSystem {
     @Test
     public void testData(){
         CSVhandler csvHandler = new CSVhandler();
-        String filePath = "src/main/resources/test.csv";
+        String filePath = "src/main/resources/import/test.csv";
         List<String[]> data = csvHandler.importData(filePath);
         assertNotNull(data);
         csvHandler.studentCSVData(data);

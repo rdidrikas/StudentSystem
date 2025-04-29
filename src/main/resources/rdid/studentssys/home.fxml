@@ -53,7 +53,7 @@
                                     <Insets left="20.0" />
                                 </padding>
                                 <children>
-                                     <Button minWidth="150" onAction="#handleImportCSVStudents" text="Import Students" />
+                                     <Button minWidth="150" onAction="#handleImportCSVStudents" text="Import Students" fx:id="importCSVStudentsButton"/>
                                     <Button minWidth="150" onAction="#handleImportCSVGroups" text="Import Groups" />
                                 </children>
                             </VBox>

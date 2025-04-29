@@ -4,14 +4,21 @@ import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import rdid.studentssys.data.CSVhandler;
+
+import java.util.Optional;
 
 
 public class HomeController {
 
+    private String dialogCSS = getClass().getResource("/rdid/studentssys/css/styles.css").toExternalForm();
+
     @FXML private Button studentsButton;
+    @FXML private Button importCSVStudentsButton;
     @FXML private VBox sidebar;
     @FXML private VBox subGroupsSidebar;
     @FXML private VBox subStudentsSidebar;
@@ -121,8 +128,17 @@ public class HomeController {
     }
 
     @FXML public void handleImportCSVStudents(){
-        // Handle import students button click
-        System.out.println("Import Students button clicked");
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle("Import Students CSV");
+        dialog.setContentText("File name:");
+        dialog.setHeaderText(null);
+        dialog.getDialogPane().getStylesheets().add(dialogCSS);
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(fileName -> {
+            CSVhandler csvHandler = new CSVhandler();
+            csvHandler.studentCSVData(csvHandler.importData("src/main/resources/import/" + fileName));
+        });
     }
 
     @FXML public void handleImportExcelStudents(){
