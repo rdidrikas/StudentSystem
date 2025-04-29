@@ -97,6 +97,7 @@
                               </VBox>
                           </children>
                       </VBox>
+                      <Button onAction="#saveData" text="Save" />
 
                   </children>
             </VBox>

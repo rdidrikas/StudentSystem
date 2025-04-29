@@ -3,6 +3,9 @@ package rdid.studentssys.data;
 import rdid.studentssys.model.Group;
 import rdid.studentssys.model.Student;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SaveStudents extends Saver {
     public SaveStudents(String filePath) {
         super(filePath);
@@ -11,20 +14,20 @@ public class SaveStudents extends Saver {
     @Override
     public void saveData() {
         String[] content = {"ID", "Name", "Surname", "Email", "Group(s)"};
-        writeToFile(content);
+        overwriteToFile(content);
         for (Student student : Student.getAllStudents()) {
-            String[] studentData = new String[5];
-            studentData[0] = String.valueOf(student.getId());
-            studentData[1] = student.getName();
-            studentData[2] = student.getSurname();
-            studentData[3] = student.getEmail();
-            StringBuilder groups = new StringBuilder();
-            for (Group group : student.getGroup()) {
-                groups.append(group.getGroupName()).append(" ");
+            List<String> studentData = new ArrayList<>();
+            studentData.add(String.valueOf(student.getId()));
+            studentData.add(student.getName());
+            studentData.add(student.getSurname());
+            studentData.add(student.getEmail());
+            List<Group> groups = student.getGroup();
+            for (Group group : groups) {
+                studentData.add(group.getGroupName());
             }
-            studentData[4] = groups.toString().trim();
-            writeToFile(studentData);
+            String[] studentDataArray = new String[studentData.size()];
+            studentDataArray = studentData.toArray(studentDataArray);
+            appendToFile(studentDataArray);
         }
-
     }
 }

@@ -15,8 +15,18 @@ public abstract class Saver {
 
     public abstract void saveData();
 
-    protected void writeToFile (String[] content) {
-        try (CSVWriter writer = new CSVWriter(new FileWriter(filePath))) {
+    protected void overwriteToFile (String[] content) {
+        try (CSVWriter writer = new CSVWriter(new FileWriter(filePath), CSVWriter.DEFAULT_SEPARATOR,
+                CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
+            writer.writeNext(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void appendToFile (String[] content) {
+        try (CSVWriter writer = new CSVWriter(new FileWriter(filePath, true), CSVWriter.DEFAULT_SEPARATOR,
+                CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
             writer.writeNext(content);
         } catch (IOException e) {
             e.printStackTrace();

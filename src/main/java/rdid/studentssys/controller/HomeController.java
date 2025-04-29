@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import rdid.studentssys.data.CSVhandler;
+import rdid.studentssys.data.SaveStudents;
 
 import java.util.Optional;
 
@@ -175,5 +176,13 @@ public class HomeController {
         // Handle export data button click
         System.out.println("Export Groups button clicked");
     }
+
+    @FXML public void saveData() {
+        // Handle save data button click
+        System.out.println("Save Data button clicked");
+        SaveStudents saveStudents = new SaveStudents("src/main/resources/data/students.csv");
+        saveStudents.saveData();
+    }
+
 
 }

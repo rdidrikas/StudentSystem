@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Student {
     private static int idCounter = 0;
-    private final int id;
+    private int id;
     private String name;
     private String surname;
     private String email;
@@ -22,6 +22,7 @@ public class Student {
             this.email = email;
             this.groups = new ArrayList<>();
             GroupManager.getInstance().getDefaultGroup().addStudent(this); // Adding student to default group and add default group to groups
+            students.add(this);
         }
     }
 
@@ -35,13 +36,12 @@ public class Student {
             for(String group : groupArr) {
                 if(GroupManager.getInstance().getGroupByName(group) != null) {
                     GroupManager.getInstance().getGroupByName(group).addStudent(this);
-                    groups.add(GroupManager.getInstance().getGroupByName(group));
                 } else {
                     GroupManager.getInstance().createGroup(group);
                     GroupManager.getInstance().getGroupByName(group).addStudent(this);
-                    groups.add(GroupManager.getInstance().getGroupByName(group));
                 }
             }
+            students.add(this);
         }
     }
 
