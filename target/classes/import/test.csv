@@ -1,0 +1,6 @@
+id,name,surname,email,groups
+1,John,Doe,john.doe@example.com,Math,Science
+2,Jane,Smith,jane.smith@example.com,Science
+3,Alex,Johnson,alex.johnson@example.com,Math
+4,Emily,Brown,emily.brown@example.com,Math,Art,History
+5,Daniel,Williams,daniel.williams@example.com,

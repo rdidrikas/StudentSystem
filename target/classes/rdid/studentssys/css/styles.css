@@ -1,0 +1,29 @@
+.root {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.label {
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-radius: 5;
+    -fx-font-size: 15;
+}
+
+.button:hover {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+
+
+#HomeName {
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+}
