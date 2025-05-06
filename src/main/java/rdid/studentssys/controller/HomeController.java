@@ -14,7 +14,6 @@ import rdid.studentssys.data.CSVhandler;
 import rdid.studentssys.data.SaveStudents;
 import rdid.studentssys.model.GroupManager;
 import rdid.studentssys.model.Student;
-
 import java.util.Optional;
 
 
@@ -90,10 +89,12 @@ public class HomeController implements DashboardObserver {
         slideTransition.play();
     }
 
+
     @Override
     public void updateDashboard() {
         studentCount.setText(String.valueOf(Student.getAllStudents().size()));
         groupCount.setText(String.valueOf(GroupManager.getInstance().getAllGroups().size()));
+        System.out.println("Dashboard updated");
     }
 
     @FXML public void initialize() {

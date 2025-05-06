@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import rdid.studentssys.controller.ControllerLocator;
+import rdid.studentssys.controller.HomeController;
 import rdid.studentssys.data.CSVhandler;
 
 import java.io.IOException;
@@ -16,10 +18,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        CSVhandler csvHandler = new CSVhandler();
-        csvHandler.studentCSVData(csvHandler.importData("src/main/resources/data/students.csv")); // loading data
-
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/rdid/studentssys/home.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/rdid/studentssys/home.fxml")));
+        Parent root = loader.load();
 
         // Create the scene
         Scene scene = new Scene(root, 800, 600);
@@ -27,6 +27,12 @@ public class Main extends Application {
 
         // Set window title
         primaryStage.setTitle("Student Attendance System");
+
+        HomeController homeController = loader.getController();
+        ControllerLocator.setHomeController(homeController);
+
+        CSVhandler csvHandler = new CSVhandler();
+        csvHandler.studentCSVData(csvHandler.importData("src/main/resources/data/students.csv")); // loading data
 
         // Add the scene to the stage
         primaryStage.setScene(scene);

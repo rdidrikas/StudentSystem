@@ -1,5 +1,10 @@
 package rdid.studentssys.model;
 
+import rdid.studentssys.controller.ControllerLocator;
+import rdid.studentssys.controller.HomeController;
+import rdid.studentssys.controller.DashboardObserver;
+
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -23,6 +28,7 @@ public class Student {
             this.groups = new ArrayList<>();
             GroupManager.getInstance().getDefaultGroup().addStudent(this); // Adding student to default group and add default group to groups
             students.add(this);
+            ControllerLocator.getHomeController().updateDashboard();
         }
     }
 
@@ -42,6 +48,7 @@ public class Student {
                 }
             }
             students.add(this);
+            ControllerLocator.getHomeController().updateDashboard();
         }
     }
 

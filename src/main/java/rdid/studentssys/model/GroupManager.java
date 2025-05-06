@@ -1,5 +1,7 @@
 package rdid.studentssys.model;
 
+import rdid.studentssys.controller.ControllerLocator;
+
 import java.util.*;
 
 public class GroupManager {
@@ -40,6 +42,7 @@ public class GroupManager {
     public void createGroup(String groupName) {
         Group newGroup = new Group(groupName);
         allGroups.add(newGroup);
+        ControllerLocator.getHomeController().updateDashboard();
     }
 
     public void deleteGroup(String groupName){
@@ -54,6 +57,7 @@ public class GroupManager {
         } else {
             System.out.println("Group not found.");
         }
+        ControllerLocator.getHomeController().updateDashboard();
     }
     public void deleteGroup(Group group){
         if (group != null) {
@@ -67,6 +71,7 @@ public class GroupManager {
         } else {
             System.out.println("Group not found.");
         }
+        ControllerLocator.getHomeController().updateDashboard();
     }
 
     public void addStudentToGroup(Student student, String groupName) {

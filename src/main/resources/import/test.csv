@@ -3,4 +3,5 @@ id,name,surname,email,groups
 2,Jane,Smith,jane.smith@example.com,Science
 3,Alex,Johnson,alex.johnson@example.com,Math
 4,Emily,Brown,emily.brown@example.com,Math,Art,History
-5,Daniel,Williams,daniel.williams@example.com,
+5,Daniel,Williams,daniel.williams@example.com,Default Group
+6,Rokas,Edga,aniel.wiams@exam.com,Default Group
