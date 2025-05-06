@@ -2,10 +2,12 @@ package rdid.studentssys.controller;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.StageStyle;
@@ -38,45 +40,16 @@ public class HomeController implements DashboardObserver {
     @FXML private VBox subImportExcelSidebar;
     @FXML private VBox subExportCSVSidebar;
     @FXML private VBox subExportExcelSidebar;
+    @FXML private VBox studentsContentPane;
 
+    @FXML private TableView<Student> studentTable;
+    @FXML private TableColumn<Student, String> nameColumn;
+    @FXML private TableColumn<Student, String> surnameColumn;
+    @FXML private TableColumn<Student, String> emailColumn;
+    @FXML private TableColumn<Student, String> groupsColumn;
 
-    private void toggleVisibility(VBox menu) {
+    private final ObservableList<Student> students = FXCollections.observableArrayList();
 
-        if (menuToggled) {
-            toggleDashboardExpand(true);
-        } else {
-            toggleDashboardExpand(false);
-        }
-
-        boolean menuVisible = menu.isVisible();
-
-        TranslateTransition slideTransition = new TranslateTransition(Duration.millis(250), menu);
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(250), menu);
-
-        if (menuVisible) {
-            slideTransition.setToX(-menu.getWidth()); // move it left
-            slideTransition.setOnFinished(event -> {
-                menu.setVisible(false);
-                menu.setManaged(false);
-            });
-            fadeTransition.setToValue(0);
-            fadeTransition.setOnFinished(event -> {
-                menu.setVisible(false);
-            });
-        } else {
-            // Prepare menu first
-            menu.setTranslateX(-menu.getWidth()); // start off-screen
-            menu.setVisible(true);
-            menu.setManaged(true);
-            menu.setOpacity(0);
-            // Slide menu in
-            slideTransition.setToX(0); // move to normal position
-            fadeTransition.setToValue(1);
-        }
-
-        slideTransition.play();
-        fadeTransition.play();
-    }
 
     private void toggleDashboardExpand(boolean expand) {
         TranslateTransition slideTransition = new TranslateTransition(Duration.millis(250), statsRow);
@@ -90,6 +63,7 @@ public class HomeController implements DashboardObserver {
     }
 
 
+
     @Override
     public void updateDashboard() {
         studentCount.setText(String.valueOf(Student.getAllStudents().size()));
@@ -99,6 +73,43 @@ public class HomeController implements DashboardObserver {
 
     @FXML public void initialize() {
         updateDashboard();
+    }
+
+    private void setupTableColumns() {
+        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        surnameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSurname()));
+        emailColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
+        groupsColumn.setCellValueFactory(cellData -> new SimpleStringProperty(
+                String.join(", ", cellData.getValue().getGroupNames())
+        ));
+
+        studentTable.setItems(students);
+    }
+
+    private void loadInitialData() {
+        students.setAll(Student.getAllStudents());
+    }
+
+    private void setupTableListeners() {
+        studentTable.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldSelection, newSelection) -> {
+                    if (newSelection != null) {
+                        handleStudentSelection(newSelection);
+                    }
+                }
+        );
+    }
+
+    private void handleStudentSelection(Student selectedStudent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Student Details");
+        alert.setHeaderText("Student Information");
+        alert.setContentText(
+                "Name: " + selectedStudent.getName() + " " + selectedStudent.getSurname() + "\n" +
+                        "Email: " + selectedStudent.getEmail() + "\n" +
+                        "Groups: " + String.join(", ", selectedStudent.getGroupNames())
+        );
+        alert.showAndWait();
     }
 
     @FXML public void toggleMenu() {
@@ -139,12 +150,59 @@ public class HomeController implements DashboardObserver {
     }
 
     @FXML public void handleAddStudentButton() {
-        // Handle add student button click
         System.out.println("Add Student button clicked");
+
+        Dialog<Student> dialog = new Dialog<>();
+        dialog.setTitle("Add Student");
+        dialog.setHeaderText("Enter student details");
+
+        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        TextField nameField = new TextField();
+        nameField.setPromptText("Name");
+        TextField surnameField = new TextField();
+        surnameField.setPromptText("Surname");
+        TextField emailField = new TextField();
+        emailField.setPromptText("Email");
+        TextField groupField = new TextField();
+        groupField.setPromptText("Group, comma separated");
+        grid.add(new Label("Name:"), 0, 0);
+        grid.add(nameField, 1, 0);
+        grid.add(new Label("Surname:"), 0, 1);
+        grid.add(surnameField, 1, 1);
+        grid.add(new Label("Email:"), 0, 2);
+        grid.add(emailField, 1, 2);
+        grid.add(new Label("Group(s):"), 0, 3);
+        grid.add(groupField, 1, 3);
+
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.setResultConverter(buttonType -> {
+            if (buttonType == saveButtonType) {
+                if (!groupField.getText().isEmpty()){
+                    String[] groupArr = groupField.getText().split(",");
+                    new Student(nameField.getText(), surnameField.getText(), emailField.getText(), groupArr);
+                } else {
+                    new Student(nameField.getText(), surnameField.getText(), emailField.getText());
+                }
+            }
+            return null;
+        });
+
+        dialog.showAndWait();
     }
 
     @FXML public void handleViewStudentButton(){
-        System.out.println("View Student button clicked");
+        toggleVisibility(studentsContentPane);
+        toggleVisibility(statsRow);
+        toggleDashboardExpand(true);
+        toggleVisibility(sidebar);
+
+        if (studentsContentPane.isVisible()) {
+            loadInitialData();
+        }
     }
 
     @FXML public void handleEditStudentsButton() {
@@ -223,5 +281,79 @@ public class HomeController implements DashboardObserver {
         saveStudents.saveData();
     }
 
+    private void toggleVisibility(VBox menu) {
+        if (menuToggled) {
+            toggleDashboardExpand(true);
+        } else {
+            toggleDashboardExpand(false);
+        }
+
+        boolean menuVisible = menu.isVisible();
+
+        TranslateTransition slideTransition = new TranslateTransition(Duration.millis(250), menu);
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(250), menu);
+
+        if (menuVisible) {
+            slideTransition.setToX(-menu.getWidth()); // move it left
+            slideTransition.setOnFinished(event -> {
+                menu.setVisible(false);
+                menu.setManaged(false);
+            });
+            fadeTransition.setToValue(0);
+            fadeTransition.setOnFinished(event -> {
+                menu.setVisible(false);
+            });
+        } else {
+            // Prepare menu first
+            menu.setTranslateX(-menu.getWidth()); // start off-screen
+            menu.setVisible(true);
+            menu.setManaged(true);
+            menu.setOpacity(0);
+            // Slide menu in
+            slideTransition.setToX(0); // move to normal position
+            fadeTransition.setToValue(1);
+        }
+
+        slideTransition.play();
+        fadeTransition.play();
+    }
+
+    private void toggleVisibility(HBox menu) {
+
+        if (menuToggled) {
+            toggleDashboardExpand(true);
+        } else {
+            toggleDashboardExpand(false);
+        }
+
+        boolean menuVisible = menu.isVisible();
+
+        TranslateTransition slideTransition = new TranslateTransition(Duration.millis(250), menu);
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(250), menu);
+
+        if (menuVisible) {
+            slideTransition.setToX(-menu.getWidth()); // move it left
+            slideTransition.setOnFinished(event -> {
+                menu.setVisible(false);
+                menu.setManaged(false);
+            });
+            fadeTransition.setToValue(0);
+            fadeTransition.setOnFinished(event -> {
+                menu.setVisible(false);
+            });
+        } else {
+            // Prepare menu first
+            menu.setTranslateX(-menu.getWidth()); // start off-screen
+            menu.setVisible(true);
+            menu.setManaged(true);
+            menu.setOpacity(0);
+            // Slide menu in
+            slideTransition.setToX(0); // move to normal position
+            fadeTransition.setToValue(1);
+        }
+
+        slideTransition.play();
+        fadeTransition.play();
+    }
 
 }

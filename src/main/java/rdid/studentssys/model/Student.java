@@ -1,5 +1,6 @@
 package rdid.studentssys.model;
 
+import javafx.beans.property.StringProperty;
 import rdid.studentssys.controller.ControllerLocator;
 import rdid.studentssys.controller.HomeController;
 import rdid.studentssys.controller.DashboardObserver;
@@ -98,6 +99,16 @@ public class Student {
             return null;
         }
         return groups;
+    }
+
+    public List<String> getGroupNames() {
+        List<String> groupNames = new ArrayList<>();
+        if (groups != null) {
+            for (Group group : groups) {
+                groupNames.add(group.getGroupName());
+            }
+        }
+        return groupNames;
     }
 
     public static final List<Student> getAllStudents() {

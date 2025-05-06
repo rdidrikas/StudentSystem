@@ -82,6 +82,9 @@ public class GroupManager {
         }
         group.addStudent(student);
         System.out.println("Student added to group: " + group.getGroupName());
+        if (group != GroupManager.getInstance().getDefaultGroup()) {
+            removeStudentFromGroup(student, GroupManager.getInstance().getDefaultGroup().getGroupName());
+        }
     }
 
     public void removeStudentFromGroup(Student student, String groupName) {
@@ -89,6 +92,10 @@ public class GroupManager {
         if (group != null) {
             group.removeStudent(student);
             System.out.println("Student removed from group.");
+        }
+        if (student.getGroup() == null) {
+            defaultGroup.addStudent(student);
+            System.out.println("Student added to default group.");
         }
     }
 

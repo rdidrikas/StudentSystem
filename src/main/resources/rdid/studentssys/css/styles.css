@@ -20,6 +20,23 @@
     -fx-text-fill: black;
 }
 
+.table-view {
+    -fx-background-color: black;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}
+
+.table-column-header {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
 
 
 #HomeName {
@@ -52,3 +69,10 @@
     -fx-alignment: CENTER;
 }
 
+#studentsContentPane {
+    -fx-background-color: black;
+    -fx-padding: 20px;
+
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+}
