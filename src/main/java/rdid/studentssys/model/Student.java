@@ -21,20 +21,20 @@ public class Student {
     private static List<Student> students = new ArrayList<>();
 
     public Student(String name, String surname, String email) {
-        if(!containsStudent(name, surname, email)) { // No duplicates
+        if(!StudentManager.getInstance().alreadyHere(name, surname, email)) { // No duplicates
             this.id = ++idCounter;
             this.name = name;
             this.surname = surname;
             this.email = email;
             this.groups = new ArrayList<>();
             GroupManager.getInstance().getDefaultGroup().addStudent(this); // Adding student to default group and add default group to groups
-            students.add(this);
+            StudentManager.getInstance().addStudent(this);
             ControllerLocator.getHomeController().updateDashboard();
         }
     }
 
     public Student(String name, String surname, String email, String[] groupArr) {
-        if(!containsStudent(name, surname, email)) { // No duplicates
+        if(!StudentManager.getInstance().alreadyHere(name, surname, email)) { // No duplicates
             this.id = ++idCounter;
             this.name = name;
             this.surname = surname;
@@ -48,7 +48,7 @@ public class Student {
                     GroupManager.getInstance().getGroupByName(group).addStudent(this);
                 }
             }
-            students.add(this);
+            StudentManager.getInstance().addStudent(this);
             ControllerLocator.getHomeController().updateDashboard();
         }
     }
@@ -61,15 +61,6 @@ public class Student {
         for (Group group : groups) {
             group.updateAttendance(this, attendance);
         }
-    }
-
-    private boolean containsStudent(String name, String surname, String email) {
-        for (Student student : students) {
-            if (student.name.equals(name) && student.surname.equals(surname) && student.email.equals(email)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     // Getters and setters
@@ -111,9 +102,6 @@ public class Student {
         return groupNames;
     }
 
-    public static final List<Student> getAllStudents() {
-        return students;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -148,7 +136,5 @@ public class Student {
             group.updateAttendance(this, attendance);
         }
     }
-
-
 
 }

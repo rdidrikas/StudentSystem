@@ -3,6 +3,7 @@ package rdid.studentssys.controller;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,8 +15,12 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import rdid.studentssys.data.CSVhandler;
 import rdid.studentssys.data.SaveStudents;
+import rdid.studentssys.design.CalendarView;
 import rdid.studentssys.model.GroupManager;
 import rdid.studentssys.model.Student;
+import rdid.studentssys.model.StudentManager;
+
+import java.util.Calendar;
 import java.util.Optional;
 
 
@@ -23,9 +28,14 @@ public class HomeController implements DashboardObserver {
 
     private String dialogCSS = getClass().getResource("/rdid/studentssys/css/styles.css").toExternalForm();
     private boolean menuToggled = false;
+    private boolean actionMenuToggled = false;
+
+    ChangeListener<Student> selectionListener;
 
     @FXML private Button studentsButton;
     @FXML private Button importCSVStudentsButton;
+
+    @FXML private GridPane calendarGrid;
 
     @FXML private Label studentCount;
     @FXML private Label groupCount;
@@ -41,8 +51,11 @@ public class HomeController implements DashboardObserver {
     @FXML private VBox subExportCSVSidebar;
     @FXML private VBox subExportExcelSidebar;
     @FXML private VBox studentsContentPane;
+    @FXML private VBox attendancePane;
+    @FXML private VBox tableActions;
 
     @FXML private TableView<Student> studentTable;
+    @FXML private TableColumn<Student, String> idColumn;
     @FXML private TableColumn<Student, String> nameColumn;
     @FXML private TableColumn<Student, String> surnameColumn;
     @FXML private TableColumn<Student, String> emailColumn;
@@ -62,11 +75,9 @@ public class HomeController implements DashboardObserver {
         slideTransition.play();
     }
 
-
-
     @Override
     public void updateDashboard() {
-        studentCount.setText(String.valueOf(Student.getAllStudents().size()));
+        studentCount.setText(String.valueOf(StudentManager.getInstance().getAllStudents().size()));
         groupCount.setText(String.valueOf(GroupManager.getInstance().getAllGroups().size()));
         System.out.println("Dashboard updated");
     }
@@ -76,6 +87,7 @@ public class HomeController implements DashboardObserver {
     }
 
     private void setupTableColumns() {
+        idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         surnameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSurname()));
         emailColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
@@ -84,32 +96,56 @@ public class HomeController implements DashboardObserver {
         ));
 
         studentTable.setItems(students);
+
+    }
+
+    @FXML public void handleEditStudentButton() {
+
+    }
+
+    @FXML public void handleDeleteStudentButton() {
+        Student selectedStudent = studentTable.getSelectionModel().getSelectedItem();
+        if (selectedStudent != null) {
+            students.remove(selectedStudent);
+            StudentManager.getInstance().deleteStudent(selectedStudent);
+            System.out.println("Deleted student: " + selectedStudent.getName());
+            actionMenuToggled = false;
+            toggleVisibility(tableActions);
+        } else {
+            System.out.println("No student selected for deletion.");
+        }
+    }
+
+    @FXML public void handleViewStudentAttendanceButton() {
+        toggleVisibility(studentsContentPane);
+        toggleVisibility(tableActions);
+        toggleVisibility(attendancePane);
+        CalendarView calendar = new CalendarView();
+        calendarGrid.getChildren().add(calendar);
     }
 
     private void loadInitialData() {
-        students.setAll(Student.getAllStudents());
+        students.setAll(StudentManager.getInstance().getAllStudents());
     }
 
     private void setupTableListeners() {
-        studentTable.getSelectionModel().selectedItemProperty().addListener(
+        selectionListener = (
                 (obs, oldSelection, newSelection) -> {
                     if (newSelection != null) {
                         handleStudentSelection(newSelection);
                     }
                 }
         );
+        studentTable.getSelectionModel().selectedItemProperty().addListener(selectionListener);
     }
 
     private void handleStudentSelection(Student selectedStudent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Student Details");
-        alert.setHeaderText("Student Information");
-        alert.setContentText(
-                "Name: " + selectedStudent.getName() + " " + selectedStudent.getSurname() + "\n" +
-                        "Email: " + selectedStudent.getEmail() + "\n" +
-                        "Groups: " + String.join(", ", selectedStudent.getGroupNames())
-        );
-        alert.showAndWait();
+        System.out.println("Selected student: " + selectedStudent.getName());
+        if (!actionMenuToggled) {
+            toggleVisibility(tableActions);
+            actionMenuToggled = true;
+        }
+        // Perform actions based on the selected student
     }
 
     @FXML public void toggleMenu() {
@@ -199,9 +235,16 @@ public class HomeController implements DashboardObserver {
         toggleVisibility(statsRow);
         toggleDashboardExpand(true);
         toggleVisibility(sidebar);
+        actionMenuToggled = false;
 
         if (studentsContentPane.isVisible()) {
             loadInitialData();
+            setupTableColumns();
+            setupTableListeners();
+        } else {
+            studentTable.getSelectionModel().selectedItemProperty().removeListener(selectionListener);
+            studentTable.getSelectionModel().clearSelection();
+            toggleVisibility(tableActions);
         }
     }
 

@@ -2,6 +2,7 @@ package rdid.studentssys.data;
 
 import rdid.studentssys.model.Group;
 import rdid.studentssys.model.Student;
+import rdid.studentssys.model.StudentManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class SaveStudents extends Saver {
     public void saveData() {
         String[] content = {"ID", "Name", "Surname", "Email", "Group(s)"};
         overwriteToFile(content);
-        for (Student student : Student.getAllStudents()) {
+        for (Student student : StudentManager.getInstance().getAllStudents()) {
             List<String> studentData = new ArrayList<>();
             studentData.add(String.valueOf(student.getId()));
             studentData.add(student.getName());

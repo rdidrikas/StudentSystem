@@ -99,5 +99,13 @@ public class GroupManager {
         }
     }
 
+    public void removeStudentFromAllGroups(Student student) {
+        for (Group group : allGroups) {
+            if (group.getStudents().contains(student)) {
+                group.removeStudent(student);
+            }
+        }
+    }
+
 
 }

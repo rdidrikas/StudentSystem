@@ -27,17 +27,24 @@
     -fx-padding: 5px;
 }
 
-.table-row-cell:selected {
-    -fx-background-color: #3498db;
+.table-row-cell {
+    -fx-background-color: transparent; /* or set a color like #2a2a2a */
     -fx-text-fill: white;
 }
 
-.table-column-header {
-    -fx-background-color: #3498db;
+.table-row-cell:filled:selected, .table-row-cell:filled:selected:hover {
+    -fx-background-color: transparent;
+    -fx-border-radius: 1px;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+}
+
+.table-view .column-header .label {
     -fx-text-fill: white;
+    -fx-font-size: 15;
     -fx-font-weight: bold;
+    -fx-background-color: #2a2a2a;
 }
-
 
 #HomeName {
     -fx-text-fill: white;
@@ -72,7 +79,6 @@
 #studentsContentPane {
     -fx-background-color: black;
     -fx-padding: 20px;
-
     -fx-border-radius: 5px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
 }
