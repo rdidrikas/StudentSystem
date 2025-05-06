@@ -4,22 +4,32 @@ import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import rdid.studentssys.data.CSVhandler;
 import rdid.studentssys.data.SaveStudents;
+import rdid.studentssys.model.GroupManager;
+import rdid.studentssys.model.Student;
 
 import java.util.Optional;
 
 
-public class HomeController {
+public class HomeController implements DashboardObserver {
 
     private String dialogCSS = getClass().getResource("/rdid/studentssys/css/styles.css").toExternalForm();
+    private boolean menuToggled = false;
 
     @FXML private Button studentsButton;
     @FXML private Button importCSVStudentsButton;
+
+    @FXML private Label studentCount;
+    @FXML private Label groupCount;
+
+    @FXML private HBox statsRow;
     @FXML private VBox sidebar;
     @FXML private VBox subGroupsSidebar;
     @FXML private VBox subStudentsSidebar;
@@ -32,6 +42,12 @@ public class HomeController {
 
 
     private void toggleVisibility(VBox menu) {
+
+        if (menuToggled) {
+            toggleDashboardExpand(true);
+        } else {
+            toggleDashboardExpand(false);
+        }
 
         boolean menuVisible = menu.isVisible();
 
@@ -63,7 +79,29 @@ public class HomeController {
         fadeTransition.play();
     }
 
+    private void toggleDashboardExpand(boolean expand) {
+        TranslateTransition slideTransition = new TranslateTransition(Duration.millis(250), statsRow);
+
+        if (expand) {
+            slideTransition.setToX(140);
+        } else {
+            slideTransition.setToX(0);
+        }
+        slideTransition.play();
+    }
+
+    @Override
+    public void updateDashboard() {
+        studentCount.setText(String.valueOf(Student.getAllStudents().size()));
+        groupCount.setText(String.valueOf(GroupManager.getInstance().getAllGroups().size()));
+    }
+
+    @FXML public void initialize() {
+        updateDashboard();
+    }
+
     @FXML public void toggleMenu() {
+        menuToggled = !menuToggled;
         toggleVisibility(sidebar);
     }
 

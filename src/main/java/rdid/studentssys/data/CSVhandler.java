@@ -35,7 +35,7 @@ public class CSVhandler implements ImportExport {
             String name = row[1];
             String surname = row[2];
             String email = row[3];
-            String[] groupArr = Arrays.copyOfRange(row, 4, row.length);
+            String[] groupArr = Arrays.copyOfRange(row, 4, row.length); 
             if(groupArr[0].isEmpty()){
                 new Student(name, surname, email);
             } else {

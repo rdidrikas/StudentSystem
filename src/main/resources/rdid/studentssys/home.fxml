@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -53,7 +54,7 @@
                                     <Insets left="20.0" />
                                 </padding>
                                 <children>
-                                     <Button minWidth="150" onAction="#handleImportCSVStudents" text="Import Students" fx:id="importCSVStudentsButton"/>
+                                     <Button fx:id="importCSVStudentsButton" minWidth="150" onAction="#handleImportCSVStudents" text="Import Students" />
                                     <Button minWidth="150" onAction="#handleImportCSVGroups" text="Import Groups" />
                                 </children>
                             </VBox>
@@ -103,6 +104,21 @@
             </VBox>
             <Button layoutX="20.0" layoutY="25.0" onAction="#toggleMenu" text="☰" />
             <Label fx:id="HomeName" layoutX="76.0" layoutY="28.0" style="-fx-font-size: 18px;" text="Student Attendance System" />
+            <HBox fx:id="statsRow" layoutX="108.0" layoutY="135.0" prefHeight="169.0" prefWidth="522.0" stylesheets="@css/styles.css">
+               <children>
+                  <VBox fx:id="studentCard" alignment="CENTER" prefHeight="169.0" prefWidth="273.0">
+                     <children>
+                         <Label fx:id="studentCountLabel" text="Students" />
+                         <Label fx:id="studentCount" style="-fx-font-size: 26; -fx-font-weight: bold;" text="0" />
+                     </children></VBox>
+                  <VBox fx:id="groupCard" alignment="CENTER" prefHeight="169.0" prefWidth="255.0">
+                     <children>
+                         <Label fx:id="groupCountLabel" prefHeight="28.0" prefWidth="77.0" text="Groups" />
+                         <Label fx:id="groupCount" style="-fx-font-size: 26; -fx-font-weight: bold;" text="0" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
    </children>

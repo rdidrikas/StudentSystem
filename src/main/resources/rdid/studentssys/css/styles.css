@@ -27,3 +27,28 @@
     -fx-font-size: 20;
     -fx-font-weight: bold;
 }
+
+#statsRow {
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-pref-width: 500;
+    -fx-pref-height: 200;
+}
+
+#studentCard {
+    -fx-border-radius: 15;
+    -fx-border-color: #ccc;
+    -fx-border-insets: 40;
+}
+
+#groupCard {
+    -fx-border-radius: 15;
+    -fx-border-color: #ccc;
+    -fx-border-insets: 40;
+}
+
+#groupCountLabel {
+    -fx-alignment: CENTER;
+}
+
