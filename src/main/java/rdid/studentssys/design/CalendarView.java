@@ -2,7 +2,9 @@ package rdid.studentssys.design;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
+
 import rdid.studentssys.model.Student;
+import rdid.studentssys.model.AttendanceManager;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -12,6 +14,7 @@ import java.util.Map;
 public class CalendarView extends GridPane {
 
     private Map<LocalDate, AttendanceStatus> attendanceMap = new HashMap<>();
+    private Student student;
 
     public enum AttendanceStatus {
         PRESENT,
@@ -20,6 +23,8 @@ public class CalendarView extends GridPane {
     }
 
     public CalendarView(Student student) {
+        this.student = student;
+        // attendanceMap = AttendanceManager.getInstance().loadAttendance(student.getId());
         generateCalendar(student);
     }
 
@@ -33,9 +38,9 @@ public class CalendarView extends GridPane {
         // Create buttons for each day
         for (int day = 1; day <= numDays; day++) {
             Button dayButton = new Button(String.valueOf(day));
-            dayButton.getStyleClass().add("day-button");
+            dayButton.getStyleClass().add("day-button-unmarked");
             int finalDay = day;
-            dayButton.setOnAction(e -> handleAttendance(finalDay));  // Event handling for attendance marking
+            dayButton.setOnAction(e -> toggleButton(dayButton));  // Event handling for attendance marking
             this.add(dayButton, (startDay + day - 1) % 7, (startDay + day - 1) / 7);
         }
     }
@@ -43,8 +48,22 @@ public class CalendarView extends GridPane {
     private void handleAttendance(int day) {
         // Handle attendance marking (perhaps open a dialog or change button color)
         System.out.println("Attendance marked for day " + day);
+    }
 
-
+    private void toggleButton(Button button) {
+        if (button.getStyleClass().contains("day-button-unmarked")) {
+            button.getStyleClass().remove("day-button-unmarked");
+            button.getStyleClass().add("day-button-present");
+            attendanceMap.put(LocalDate.now(), AttendanceStatus.PRESENT);
+        } else if (button.getStyleClass().contains("day-button-present")) {
+            button.getStyleClass().remove("day-button-present");
+            button.getStyleClass().add("day-button-absent");
+            attendanceMap.put(LocalDate.now(), AttendanceStatus.ABSENT);
+        } else {
+            button.getStyleClass().remove("day-button-absent");
+            button.getStyleClass().add("day-button-unmarked");
+            attendanceMap.put(LocalDate.now(), AttendanceStatus.UNMARKED);
+        }
     }
 
     public Map<LocalDate, AttendanceStatus> getAttendanceMap() {
