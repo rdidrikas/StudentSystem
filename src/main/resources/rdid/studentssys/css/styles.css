@@ -46,6 +46,16 @@
     -fx-background-color: #2a2a2a;
 }
 
+.day-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-radius: 5;
+    -fx-font-size: 15;
+    -fx-pref-width: 50;
+    -fx-pref-height: 50;
+}
+
 #HomeName {
     -fx-text-fill: white;
     -fx-font-size: 20;

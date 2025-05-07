@@ -120,7 +120,8 @@ public class HomeController implements DashboardObserver {
         toggleVisibility(studentsContentPane);
         toggleVisibility(tableActions);
         toggleVisibility(attendancePane);
-        CalendarView calendar = new CalendarView();
+        Student student = studentTable.getSelectionModel().getSelectedItem();
+        CalendarView calendar = new CalendarView(student);
         calendarGrid.getChildren().add(calendar);
     }
 

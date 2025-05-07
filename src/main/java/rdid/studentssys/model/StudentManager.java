@@ -32,6 +32,15 @@ public class StudentManager {
         return students;
     }
 
+    public Student getStudentByID(int id) {
+        for (Student student : students) {
+            if (student.getId() == id) {
+                return student;
+            }
+        }
+        return null;
+    }
+
     public boolean alreadyHere(String name, String surname, String email) {
         for (Student student : students) {
             if (student.getName().equals(name) && student.getSurname().equals(surname) && student.getEmail().equals(email)) {
