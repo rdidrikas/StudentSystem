@@ -32,22 +32,14 @@ public class HomeController extends Utils {
 
     private boolean menuToggled = false;
     private boolean actionMenuToggled = false;
-    private boolean calendarMoved = false;
-
-    @FXML private Button studentsButton;
-    @FXML private Button importCSVStudentsButton;
-
-    @FXML private GridPane calendarGrid;
 
     @FXML private Label studentCount;
     @FXML private Label groupCount;
+    @FXML private Label HomeName;
+    @FXML private Button sidebarChnopcik;
 
     @FXML private VBox sidebar;
     @FXML private HBox statsRow;
-    @FXML private HBox sCP;
-    @FXML private VBox attendancePane;
-    @FXML private VBox tableActions;
-
 
     @FXML public void toggleMenu() {
         menuToggled = !menuToggled;
@@ -77,6 +69,14 @@ public class HomeController extends Utils {
 
     public VBox getSidebar() {
         return sidebar;
+    }
+
+    public Button getSidebarChnopcik() {
+        return sidebarChnopcik;
+    }
+
+    public Label getHomeName() {
+        return HomeName;
     }
 
 }

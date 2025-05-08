@@ -9,6 +9,7 @@
 
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Label?>
 <AnchorPane stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="rdid.studentssys.controller.TableController" fx:id="tableContentPane" managed="false" visible="false">
     <VBox fx:id="studentsContentPane" spacing="10" visible="false" managed="false">
@@ -31,8 +32,12 @@
         <Button fx:id="deleteStudentButton" onAction="#handleDeleteStudentButton" text="Delete Student" />
         <Button fx:id="viewStudentAttendance" onAction="#handleViewStudentAttendanceButton" text="View Attendance" />
     </VBox>
-    <VBox fx:id="attendancePane" managed="false" spacing="10" visible="false" layoutX="150" layoutY="80">
-        <GridPane fx:id="calendarGrid">
-        </GridPane>
+    <VBox fx:id="attendancePane" managed="false" spacing="10" visible="false" layoutX="150" layoutY="30">
+        <Label text="Attendance Calendar" fx:id="calendarName"/>
+        <GridPane fx:id="calendarGrid"/>
+        <HBox>
+            <Button layoutX="40" layoutY="375" onAction="#handleViewStudentButton" text="Close" />
+            <Button layoutX="80" layoutY="375" onAction="#handleSaveAttendance" text="Save" />
+        </HBox>
     </VBox>
 </AnchorPane>

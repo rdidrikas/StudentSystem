@@ -5,6 +5,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +18,8 @@ import rdid.studentssys.model.Student;
 import rdid.studentssys.model.StudentManager;
 
 public class TableController extends Utils {
+
+    @FXML Label calendarName;
 
     @FXML private VBox studentsContentPane;
     @FXML private VBox attendancePane;
@@ -46,9 +50,19 @@ public class TableController extends Utils {
         toggleVisibility(studentsContentPane);
         toggleVisibility(tableActions);
         toggleVisibility(attendancePane);
+
+        mainController.getSidebarChnopcik().setManaged(false); // disable hamburger icon
+        mainController.getSidebarChnopcik().setVisible(false);
+        mainController.getHomeName().setManaged(false); // disable home name
+        mainController.getHomeName().setVisible(false);
+
         Student student = studentTable.getSelectionModel().getSelectedItem();
         CalendarView calendar = new CalendarView(student);
         calendarGrid.getChildren().add(calendar);
+
+        calendarName.setText("Attendance for " + student.getName() + " " + student.getSurname() );
+        calendarName.getStyleClass().add("calendar-name");
+        calendarName.setContentDisplay(ContentDisplay.CENTER);
     }
 
     public void handleViewStudentButton(){
@@ -101,6 +115,9 @@ public class TableController extends Utils {
         mainController.updateDashboard();
     }
 
+    @FXML public void handleSaveAttendance(){
+
+    }
 
 
     private void loadInitialData() {

@@ -18,7 +18,7 @@
    <children>
       <AnchorPane fx:id="mainContent" prefHeight="429.0" prefWidth="715.0">
          <children>
-            <Button layoutX="20.0" layoutY="25.0" onAction="#toggleMenu" text="☰" />
+            <Button layoutX="20.0" layoutY="25.0" onAction="#toggleMenu" text="☰" fx:id="sidebarChnopcik"/>
             <Label fx:id="HomeName" layoutX="76.0" layoutY="28.0" style="-fx-font-size: 18px;" text="Student Attendance System" />
             <fx:include source="sidebar.fxml" fx:id="sidebar" managed="false" visible="false"/>
              <fx:include source="table.fxml" fx:id="table" managed="false" visible="false"/>

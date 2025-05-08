@@ -92,6 +92,13 @@
     -fx-font-weight: bold;
 }
 
+.calendar-name {
+    -fx-text-fill: white;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+}
+
 #HomeName {
     -fx-text-fill: white;
     -fx-font-size: 20;
