@@ -9,7 +9,5 @@ public class SaveAttendance extends Saver {
     public void saveData() {
         String[] content = {"Date", "Status"};
         overwriteToFile(content);
-
-
     }
 }

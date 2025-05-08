@@ -142,7 +142,7 @@
                  <Button fx:id="deleteStudentButton" onAction="#handleDeleteStudentButton" text="Delete Student" />
                  <Button fx:id="viewStudentAttendance" onAction="#handleViewStudentAttendanceButton" text="View Attendance" />
              </VBox>
-             <VBox fx:id="attendancePane" managed="false" spacing="10" visible="false" layoutX="300" layoutY="72">
+             <VBox fx:id="attendancePane" managed="false" spacing="10" visible="false" layoutX="200" layoutY="72">
                  <GridPane fx:id="calendarGrid" >
 
                  </GridPane>

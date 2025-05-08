@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -29,6 +30,7 @@ public class HomeController implements DashboardObserver {
     private String dialogCSS = getClass().getResource("/rdid/studentssys/css/styles.css").toExternalForm();
     private boolean menuToggled = false;
     private boolean actionMenuToggled = false;
+    private boolean calendarMoved = false;
 
     ChangeListener<Student> selectionListener;
 
@@ -64,8 +66,8 @@ public class HomeController implements DashboardObserver {
     private final ObservableList<Student> students = FXCollections.observableArrayList();
 
 
-    private void toggleDashboardExpand(boolean expand) {
-        TranslateTransition slideTransition = new TranslateTransition(Duration.millis(250), statsRow);
+    private void toggleExpand(boolean expand, Pane menu) {
+        TranslateTransition slideTransition = new TranslateTransition(Duration.millis(250), menu);
 
         if (expand) {
             slideTransition.setToX(140);
@@ -234,7 +236,7 @@ public class HomeController implements DashboardObserver {
     @FXML public void handleViewStudentButton(){
         toggleVisibility(studentsContentPane);
         toggleVisibility(statsRow);
-        toggleDashboardExpand(true);
+        toggleExpand(true, statsRow);
         toggleVisibility(sidebar);
         actionMenuToggled = false;
 
@@ -325,49 +327,11 @@ public class HomeController implements DashboardObserver {
         saveStudents.saveData();
     }
 
-    private void toggleVisibility(VBox menu) {
+    private void toggleVisibility(Pane menu) {
         if (menuToggled) {
-            toggleDashboardExpand(true);
+            toggleExpand(true, statsRow);
         } else {
-            toggleDashboardExpand(false);
-        }
-
-        boolean menuVisible = menu.isVisible();
-
-        TranslateTransition slideTransition = new TranslateTransition(Duration.millis(250), menu);
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(250), menu);
-
-        if (menuVisible) {
-            slideTransition.setToX(-menu.getWidth()); // move it left
-            slideTransition.setOnFinished(event -> {
-                menu.setVisible(false);
-                menu.setManaged(false);
-            });
-            fadeTransition.setToValue(0);
-            fadeTransition.setOnFinished(event -> {
-                menu.setVisible(false);
-            });
-        } else {
-            // Prepare menu first
-            menu.setTranslateX(-menu.getWidth()); // start off-screen
-            menu.setVisible(true);
-            menu.setManaged(true);
-            menu.setOpacity(0);
-            // Slide menu in
-            slideTransition.setToX(0); // move to normal position
-            fadeTransition.setToValue(1);
-        }
-
-        slideTransition.play();
-        fadeTransition.play();
-    }
-
-    private void toggleVisibility(HBox menu) {
-
-        if (menuToggled) {
-            toggleDashboardExpand(true);
-        } else {
-            toggleDashboardExpand(false);
+            toggleExpand(false, statsRow);
         }
 
         boolean menuVisible = menu.isVisible();
