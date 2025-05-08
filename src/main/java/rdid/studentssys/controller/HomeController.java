@@ -40,6 +40,7 @@ public class HomeController extends Utils {
 
     @FXML private VBox sidebar;
     @FXML private HBox statsRow;
+    @FXML private HBox mainHeader;
 
     @FXML public void toggleMenu() {
         menuToggled = !menuToggled;
@@ -77,6 +78,10 @@ public class HomeController extends Utils {
 
     public Label getHomeName() {
         return HomeName;
+    }
+
+    public HBox getMainHeader() {
+        return mainHeader;
     }
 
 }

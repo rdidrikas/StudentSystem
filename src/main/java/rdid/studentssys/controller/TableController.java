@@ -50,12 +50,7 @@ public class TableController extends Utils {
         toggleVisibility(studentsContentPane);
         toggleVisibility(tableActions);
         toggleVisibility(attendancePane);
-
-        mainController.getSidebarChnopcik().setManaged(false); // disable hamburger icon
-        mainController.getSidebarChnopcik().setVisible(false);
-        mainController.getHomeName().setManaged(false); // disable home name
-        mainController.getHomeName().setVisible(false);
-
+        toggleVisibility(mainController.getMainHeader());
         Student student = studentTable.getSelectionModel().getSelectedItem();
         CalendarView calendar = new CalendarView(student);
         calendarGrid.getChildren().add(calendar);
