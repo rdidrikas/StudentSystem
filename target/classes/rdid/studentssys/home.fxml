@@ -18,95 +18,10 @@
    <children>
       <AnchorPane fx:id="mainContent" prefHeight="429.0" prefWidth="715.0">
          <children>
-            <VBox fx:id="sidebar" alignment="TOP_LEFT" layoutX="12.0" layoutY="56.0" managed="false" prefHeight="168.0" prefWidth="123.0" visible="false">
-                  <padding>
-                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                  </padding>
-                  <children>
-                     <Button fx:id="studentsButton" onAction="#toggleStudentsMenu" text="Students" />
-                     <VBox fx:id="subStudentsSidebar" managed="false" prefWidth="125" visible="false">
-                        <padding>
-                            <Insets left="20.0" />
-                        </padding>
-                        <children>
-                           <Button fx:id="AddStudentButton" minWidth="150" onAction="#handleAddStudentButton" text="Add Student" />
-                           <Button fx:id="ViewStudentsButton" minWidth="150" onAction="#handleViewStudentButton" text="View Students" />
-                           <Button minWidth="150" onAction="#handleEditStudentsButton" text="Edit Students" />
-                        </children>
-                     </VBox>
-                     <Button onAction="#toggleGroupsMenu" text="Groups" />
-                     <VBox fx:id="subGroupsSidebar" managed="false" visible="false">
-                        <padding>
-                           <Insets left="20.0" />
-                        </padding>
-                        <children>
-                           <Button minWidth="150" onAction="#handleAddGroupButton" text="Add Groups" />
-                           <Button minWidth="150" onAction="#handleViewGroupsButton" text="View Groups" />
-                           <Button minWidth="150" onAction="#handleEditGroupsButton" text="Edit Groups" />
-                        </children>
-                     </VBox>
-                      <Button onAction="#toggleImportMenu" text="Import Data" />
-                      <VBox fx:id="subImportSidebar" managed="false" visible="false">
-                        <padding>
-                            <Insets left="20.0" />
-                        </padding>
-                        <children>
-                           <Button minWidth="150" onAction="#toggleImportCSVMenu" text="Import with CSV" />
-                            <VBox fx:id="subImportCSVSidebar" managed="false" visible="false">
-                                <padding>
-                                    <Insets left="20.0" />
-                                </padding>
-                                <children>
-                                     <Button fx:id="importCSVStudentsButton" minWidth="150" onAction="#handleImportCSVStudents" text="Import Students" />
-                                    <Button minWidth="150" onAction="#handleImportCSVGroups" text="Import Groups" />
-                                </children>
-                            </VBox>
-                           <Button minWidth="150" onAction="#toggleImportExcelMenu" text="Import with Excel" />
-                            <VBox fx:id="subImportExcelSidebar" managed="false" visible="false">
-                                <padding>
-                                    <Insets left="20.0" />
-                                </padding>
-                                <children>
-                                    <Button minWidth="150" onAction="#handleImportExcelStudents" text="Import Students" />
-                                    <Button minWidth="150" onAction="#handleImportExcelGroups" text="Export Groups" />
-                                </children>
-                            </VBox>
-                        </children>
-                      </VBox>
-                      <Button onAction="#toggleExportMenu" text="Export Data" />
-                      <VBox fx:id="subExportSidebar" managed="false" visible="false">
-                          <padding>
-                              <Insets left="20.0" />
-                          </padding>
-                          <children>
-                              <Button minWidth="150" onAction="#toggleExportCSVMenu" text="Export with CSV" />
-                              <VBox fx:id="subExportCSVSidebar" managed="false" visible="false">
-                                  <padding>
-                                      <Insets left="20.0" />
-                                  </padding>
-                                  <children>
-                                      <Button minWidth="150" onAction="#handleExportCSVStudents" text="Export Students" />
-                                      <Button minWidth="150" onAction="#handleExportCSVGroups" text="Export Groups" />
-                                  </children>
-                              </VBox>
-                              <Button minWidth="150" onAction="#toggleExportExcelMenu" text="Export with Excel" />
-                              <VBox fx:id="subExportExcelSidebar" managed="false" visible="false">
-                                  <padding>
-                                      <Insets left="20.0" />
-                                  </padding>
-                                  <children>
-                                      <Button minWidth="150" onAction="#handleExportExcelStudents" text="Export Students" />
-                                      <Button minWidth="150" onAction="#handleExportExcelGroups" text="Export Groups" />
-                                  </children>
-                              </VBox>
-                          </children>
-                      </VBox>
-                      <Button onAction="#saveData" text="Save" />
-
-                  </children>
-            </VBox>
             <Button layoutX="20.0" layoutY="25.0" onAction="#toggleMenu" text="☰" />
             <Label fx:id="HomeName" layoutX="76.0" layoutY="28.0" style="-fx-font-size: 18px;" text="Student Attendance System" />
+            <fx:include source="sidebar.fxml" fx:id="sidebar" managed="false" visible="false"/>
+             <fx:include source="table.fxml" fx:id="table" managed="false" visible="false"/>
             <HBox fx:id="statsRow" layoutX="108.0" layoutY="135.0" prefHeight="169.0" prefWidth="522.0" stylesheets="@css/styles.css">
                <children>
                   <VBox fx:id="studentCard" alignment="CENTER" prefHeight="169.0" prefWidth="273.0">
@@ -122,31 +37,7 @@
                   </VBox>
                </children>
             </HBox>
-             <VBox fx:id="studentsContentPane" managed="false" spacing="10" visible="false">
-              <TableView fx:id="studentTable" layoutX="150.0" layoutY="72.0" prefHeight="400" prefWidth="615" >
-                  <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                  </padding>
-                  <columns>
-                      <TableColumn fx:id="idColumn"    text="ID"       prefWidth="60"/>
-                      <TableColumn fx:id="nameColumn"  text="Name"     prefWidth="120"/>
-                      <TableColumn fx:id="surnameColumn" text="Surname" prefWidth="120"/>
-                      <TableColumn fx:id="emailColumn" text="Email"    prefWidth="180"/>
-                      <TableColumn fx:id="groupsColumn" text="Groups"  prefWidth="120"/>
-                  </columns>
-                 </TableView>
-               <Button layoutX="39.0" layoutY="375.0" onAction="#handleViewStudentButton" text="Close" />
-             </VBox>
-             <VBox fx:id="tableActions" managed="false" visible="false" spacing="10" layoutX="650" layoutY="72">
-                 <Button fx:id="editStudentButton" onAction="#handleEditStudentButton" text="Edit Student" />
-                 <Button fx:id="deleteStudentButton" onAction="#handleDeleteStudentButton" text="Delete Student" />
-                 <Button fx:id="viewStudentAttendance" onAction="#handleViewStudentAttendanceButton" text="View Attendance" />
-             </VBox>
-             <VBox fx:id="attendancePane" managed="false" spacing="10" visible="false" layoutX="200" layoutY="72">
-                 <GridPane fx:id="calendarGrid" >
 
-                 </GridPane>
-             </VBox>
          </children>
       </AnchorPane>
    </children>

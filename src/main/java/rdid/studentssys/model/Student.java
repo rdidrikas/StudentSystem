@@ -1,9 +1,6 @@
 package rdid.studentssys.model;
 
-import javafx.beans.property.StringProperty;
 import rdid.studentssys.controller.ControllerLocator;
-import rdid.studentssys.controller.HomeController;
-import rdid.studentssys.controller.DashboardObserver;
 
 
 import java.time.LocalDate;

@@ -1,10 +1,11 @@
 package rdid.studentssys.design;
 
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 
 import rdid.studentssys.model.Student;
-import rdid.studentssys.model.AttendanceManager;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -15,6 +16,7 @@ public class CalendarView extends GridPane {
 
     private Map<LocalDate, AttendanceStatus> attendanceMap = new HashMap<>();
     private Student student;
+    String[] days = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
 
     public enum AttendanceStatus {
         PRESENT,
@@ -35,13 +37,19 @@ public class CalendarView extends GridPane {
         int startDay = firstDayOfMonth.getDayOfWeek().getValue();
         int numDays = lastDayOfMonth.getDayOfMonth();
 
+        for (int col = 0; col < days.length; col++) {
+            Label dayLabel = new Label(days[col]);
+            dayLabel.getStyleClass().add("day-label");
+            dayLabel.setContentDisplay(ContentDisplay.CENTER);
+            this.add(dayLabel, col, 0); // column = col, row = 0
+        }
+
         // Create buttons for each day
         for (int day = 1; day <= numDays; day++) {
             Button dayButton = new Button(String.valueOf(day));
             dayButton.getStyleClass().add("day-button-unmarked");
-            int finalDay = day;
             dayButton.setOnAction(e -> toggleButton(dayButton));  // Event handling for attendance marking
-            this.add(dayButton, (startDay + day - 1) % 7, (startDay + day - 1) / 7);
+            this.add(dayButton, (startDay + day - 1) % 7, 1 + (startDay + day - 1) / 7);
         }
     }
 

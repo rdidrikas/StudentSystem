@@ -5,7 +5,6 @@ ID,Name,Surname,Email,Group(s)
 4,Alex,Johnson,alex.johnson@example.com,Math
 5,Emily,Brown,emily.brown@example.com,Math Art History
 6,Daniel,Williams,daniel.williams@example.com,DefaultGroup
-7,Lisa,Taylor,lisa.taylor@example.com,Math
 8,Michael,Clark,michael.clark@example.com,Science History
 9,Sophia,Martinez,sophia.martinez@example.com,Art
 10,David,Lee,david.lee@example.com,Math Science Art

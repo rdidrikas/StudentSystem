@@ -52,8 +52,8 @@
     -fx-border-color: white;
     -fx-border-radius: 5;
     -fx-font-size: 15;
-    -fx-pref-width: 50;
-    -fx-pref-height: 50;
+    -fx-pref-width: 60;
+    -fx-pref-height: 60;
 }
 .day-button-unmarked:hover {
     -fx-background-color: #d6d0bf;
@@ -65,8 +65,8 @@
     -fx-border-color: white;
     -fx-border-radius: 5;
     -fx-font-size: 15;
-    -fx-pref-width: 50;
-    -fx-pref-height: 50;
+    -fx-pref-width: 60;
+    -fx-pref-height: 60;
 }
 .day-button-present:hover {
     -fx-background-color: #115c1b;
@@ -78,12 +78,18 @@
     -fx-border-color: white;
     -fx-border-radius: 5;
     -fx-font-size: 15;
-    -fx-pref-width: 50;
-    -fx-pref-height: 50;
+    -fx-pref-width: 60;
+    -fx-pref-height: 60;
 }
 .day-button-absent:hover {
     -fx-background-color: #631e1e;
     -fx-text-fill: white;
+}
+
+.day-label {
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
 }
 
 #HomeName {

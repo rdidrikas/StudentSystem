@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import rdid.studentssys.controller.ControllerLocator;
 import rdid.studentssys.controller.HomeController;
+import rdid.studentssys.controller.SidebarController;
+import rdid.studentssys.controller.TableController;
 import rdid.studentssys.data.CSVhandler;
 
 import java.io.IOException;
@@ -19,6 +21,15 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/rdid/studentssys/home.fxml")));
+        FXMLLoader sidebarLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/rdid/studentssys/sidebar.fxml")));
+        FXMLLoader tableLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/rdid/studentssys/table.fxml")));
+
+        Parent tableRoot = tableLoader.load();
+        TableController tableController = tableLoader.getController();
+
+        Parent sidebarRoot = sidebarLoader.load();
+        SidebarController sidebarController = sidebarLoader.getController();
+
         Parent root = loader.load();
 
         // Create the scene
