@@ -99,6 +99,14 @@ public class Student {
         return groupNames;
     }
 
+    public void removeGroup(Group group) {
+        if (groups != null && groups.contains(group)) {
+            groups.remove(group);
+            group.removeStudent(this);
+        } else {
+            System.out.println("Student is not in this group.");
+        }
+    }
 
     public void setName(String name) {
         this.name = name;

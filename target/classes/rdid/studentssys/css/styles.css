@@ -25,6 +25,7 @@
     -fx-border-color: #e0e0e0;
     -fx-border-radius: 5px;
     -fx-padding: 5px;
+    -fx-text-fill: #c3c0d1;
 }
 
 .table-row-cell {
@@ -100,8 +101,8 @@
 }
 
 .dialog-pane {
-    -fx-background-color: #59080d;
-    -fx-border-color: #59080d;
+    -fx-background-color: #414047;
+    -fx-border-color: #414047;
     -fx-border-width: 2px;
     -fx-font-family: "Segoe UI";
 }
@@ -112,7 +113,7 @@
 }
 
 .dialog-pane .header-panel {
-    -fx-background-color: #59080d;
+    -fx-background-color: #414047;
 }
 
 .dialog-pane .header-panel .label {

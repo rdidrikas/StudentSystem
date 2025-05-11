@@ -1,22 +1,12 @@
 package rdid.studentssys.controller;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.TranslateTransition;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.StageStyle;
-import javafx.util.Duration;
-import rdid.studentssys.data.CSVhandler;
-import rdid.studentssys.data.SaveStudents;
-import rdid.studentssys.design.CalendarView;
 import rdid.studentssys.model.GroupManager;
 import rdid.studentssys.model.Student;
 import rdid.studentssys.model.StudentManager;

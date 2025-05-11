@@ -1,12 +1,12 @@
 name,surname,email,groups
-John,Doe,john.doe@example.com,Math Science
+John,Doe,john.doe@example.com,Math,Science
 Jane,Smith,jane.smith@example.com,Science
 Alex,Johnson,alex.johnson@example.com,Math
-Emily,Brown,emily.brown@example.com,Math Art History
-Daniel,Williams,daniel.williams@example.com,DefaultGroup
+Emily,Brown,emily.brown@example.com,Math,Art,History
+Daniel,Williams,daniel.williams@example.com,Default Group
 Lisa,Taylor,lisa.taylor@example.com,Math
-Michael,Clark,michael.clark@example.com,Science History
+Michael,Clark,michael.clark@example.com,Science,History
 Sophia,Martinez,sophia.martinez@example.com,Art
-David,Lee,david.lee@example.com,Math Science Art
-Ava,Walker,ava.walker@example.com,DefaultGroup
+David,Lee,david.lee@example.com,Math,Science,Art
+Ava,Walker,ava.walker@example.com,Default Group
 Vilte,Venckute,a@a.c,Medicine

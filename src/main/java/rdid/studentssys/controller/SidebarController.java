@@ -161,8 +161,7 @@ public class SidebarController extends Utils {
     }
 
     @FXML public void handleViewGroupsButton(){
-        // Handle view group button click
-        System.out.println("View Group button clicked");
+        mainController.getTableController().handleViewGroupsButton();
     }
 
     @FXML public void handleImportCSVStudents(){
