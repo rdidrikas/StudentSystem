@@ -192,16 +192,6 @@ public class SidebarController extends Utils {
         System.out.println("Export Students button clicked");
     }
 
-    @FXML public void handleImportCSVGroups(){
-        // Handle import students button click
-        System.out.println("Import Groups button clicked");
-    }
-
-    @FXML public void handleImportExcelGroups(){
-        // Handle import students button click
-        System.out.println("Import Groups button clicked");
-    }
-
     @FXML public void handleExportCSVGroups() {
         // Handle export data button click
         System.out.println("Export Groups button clicked");

@@ -38,6 +38,11 @@
         <HBox>
             <Button layoutX="40" layoutY="375" onAction="#handleViewStudentAttendanceButton" text="Close" />
             <Button layoutX="80" layoutY="375" onAction="#handleSaveAttendance" text="Save" />
+            <HBox fx:id="navBar" alignment="CENTER" spacing="10" layoutX="300" layoutY="375">
+                <Button fx:id="prevMonthBtn" text="‹" />
+                <Label fx:id="monthLabel" />
+                <Button fx:id="nextMonthBtn" text="›" />
+            </HBox>
         </HBox>
     </VBox>
     <VBox fx:id="groupsContentPane" spacing="10" visible="false" managed="false">

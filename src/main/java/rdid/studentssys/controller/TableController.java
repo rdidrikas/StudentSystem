@@ -25,6 +25,9 @@ import java.util.List;
 public class TableController extends Utils {
 
     @FXML Label calendarName;
+    @FXML private Button prevMonthBtn;
+    @FXML private Button nextMonthBtn;
+    @FXML private Label  monthLabel;
 
     @FXML private VBox groupsContentPane;
     @FXML private VBox studentsContentPane;
@@ -268,7 +271,7 @@ public class TableController extends Utils {
 
         calendarGrid.getChildren().clear();
 
-        calendar = new CalendarView(student);
+        calendar = new CalendarView(student, prevMonthBtn, nextMonthBtn, monthLabel);
         calendarGrid.getChildren().add(calendar);
 
         calendarName.setText("Attendance for " + student.getName() + " " + student.getSurname() );
@@ -343,6 +346,11 @@ public class TableController extends Utils {
             System.out.println("No group selected for deletion.");
         }
         mainController.updateDashboard();
+    }
+
+
+    public Button getPrevMonthBtn() {
+        return prevMonthBtn;
     }
 
 }

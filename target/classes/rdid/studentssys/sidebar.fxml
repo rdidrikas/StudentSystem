@@ -51,7 +51,6 @@
                     </padding>
                     <children>
                         <Button fx:id="importCSVStudentsButton" minWidth="150" onAction="#handleImportCSVStudents" text="Import Students" />
-                        <Button minWidth="150" onAction="#handleImportCSVGroups" text="Import Groups" />
                     </children>
                 </VBox>
                 <Button minWidth="150" onAction="#toggleImportExcelMenu" text="Import with Excel" />
@@ -61,7 +60,6 @@
                     </padding>
                     <children>
                         <Button minWidth="150" onAction="#handleImportExcelStudents" text="Import Students" />
-                        <Button minWidth="150" onAction="#handleImportExcelGroups" text="Export Groups" />
                     </children>
                 </VBox>
             </children>
