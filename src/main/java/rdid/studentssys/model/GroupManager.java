@@ -65,7 +65,7 @@ public class GroupManager {
             allGroups.remove(group);
             for (Student student : group.getStudents()) {
                 // Remove student from the group and add to default group
-                // group.removeStudent(student);
+                group.removeStudent(student);
                 student.removeGroup(group);
                 if(student.getGroup().isEmpty()) {
                     defaultGroup.addStudent(student);

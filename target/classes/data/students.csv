@@ -1,2 +1,13 @@
 ID,Name,Surname,Email,Group(s)
 1,Augustas,Braskenas,aa.bbb@suka.di,Gay,Default Group
+2,John,Doe,john.doe@example.com,Math,Science
+3,Jane,Smith,jane.smith@example.com,Science
+4,Alex,Johnson,alex.johnson@example.com,Math
+5,Emily,Brown,emily.brown@example.com,Math,Art,History
+6,Daniel,Williams,daniel.williams@example.com,Default Group
+7,Lisa,Taylor,lisa.taylor@example.com,Math
+8,Michael,Clark,michael.clark@example.com,Science,History
+9,Sophia,Martinez,sophia.martinez@example.com,Art
+10,David,Lee,david.lee@example.com,Math,Science,Art
+11,Ava,Walker,ava.walker@example.com,Default Group
+12,Vilte,Venckute,a@a.c,Medicine

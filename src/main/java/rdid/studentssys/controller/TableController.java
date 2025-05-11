@@ -3,15 +3,14 @@ package rdid.studentssys.controller;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import org.controlsfx.control.CheckComboBox;
 import org.junit.FixMethodOrder;
 import rdid.studentssys.data.SaveAttendance;
 import rdid.studentssys.design.CalendarView;
@@ -19,6 +18,9 @@ import rdid.studentssys.model.Group;
 import rdid.studentssys.model.GroupManager;
 import rdid.studentssys.model.Student;
 import rdid.studentssys.model.StudentManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TableController extends Utils {
 
@@ -42,6 +44,8 @@ public class TableController extends Utils {
     @FXML private TableColumn<Student, String> groupsColumn;
 
     @FXML private GridPane calendarGrid;
+
+    private String dialogCSS = getClass().getResource("/rdid/studentssys/css/styles.css").toExternalForm();
 
     private final ObservableList<Student> students = FXCollections.observableArrayList();
     private final ObservableList<Group> groups = FXCollections.observableArrayList();
@@ -175,7 +179,69 @@ public class TableController extends Utils {
     /****** HANDLE STUDENT BUTTONS ******/
 
     @FXML public void handleEditStudentButton() {
+        Student selectedStudent = studentTable.getSelectionModel().getSelectedItem();
+        if (selectedStudent != null) {
+            Dialog<Student> dialog = new Dialog<>();
+            dialog.setTitle("Edit Student " + selectedStudent.getName());
+            dialog.setHeaderText("Change Student Details");
 
+            ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+
+            GridPane grid = new GridPane();
+            TextField nameField = new TextField(selectedStudent.getName());
+            TextField surnameField = new TextField(selectedStudent.getSurname());
+            TextField emailField = new TextField(selectedStudent.getEmail());
+            String groupNames = "";
+            for (Group group : selectedStudent.getGroup()) {
+                String name = group.getGroupName();
+                groupNames = groupNames + name + ",";
+            }
+            TextField groupField = new TextField(groupNames);
+            grid.add(new Label("Name: "), 0, 0);
+            grid.add(nameField, 1, 0);
+            grid.add(new Label("Surname: "), 0, 1);
+            grid.add(surnameField, 1, 1);
+            grid.add(new Label("Email: "), 0, 2);
+            grid.add(emailField, 1, 2);
+            grid.add(new Label("Group(s) (comma separated): "), 0, 3);
+            grid.add(groupField, 1, 3);
+
+            dialog.getDialogPane().setContent(grid);
+            dialog.getDialogPane().getStylesheets().add(dialogCSS);
+
+            dialog.setResultConverter(buttonType -> {
+                if (buttonType == saveButtonType) {
+                    String name = nameField.getText();
+                    String surname = surnameField.getText();
+                    String email = emailField.getText();
+                    String groups = groupField.getText();
+
+                    if (!name.isEmpty() && !surname.isEmpty() && !email.isEmpty()) {
+                        selectedStudent.setName(name);
+                        selectedStudent.setSurname(surname);
+                        selectedStudent.setEmail(email);
+                        System.out.println("Updated student details: " + name + " " + surname + " " + email);
+                    } else {
+                        System.out.println("Cannot leave empty fields");
+                        handleEditStudentButton();
+                    }
+                    if (!groups.isEmpty()) {
+                        GroupManager.getInstance().removeStudentFromAllGroups(selectedStudent);
+                        String[] gr = groups.split(",");
+                        for (int i = 0; i < gr.length; i++) {
+                            GroupManager.getInstance().addStudentToGroup(selectedStudent, gr[i]);
+                        }
+                    }
+                }
+                return null;
+            });
+
+            dialog.showAndWait();
+
+        } else {
+            System.out.println("No student selected for editing.");
+        }
     }
 
     @FXML public void handleDeleteStudentButton() {
@@ -227,7 +293,42 @@ public class TableController extends Utils {
     /****** HANDLE GROUP BUTTONS ******/
 
     @FXML public void handleEditGroupButton() {
+        Group selectedGroup = groupTable.getSelectionModel().getSelectedItem();
+        if (selectedGroup != null) {
+            Dialog<Group> dialog = new Dialog<>();
+            dialog.setTitle("Edit Group " + selectedGroup.getGroupName());
+            dialog.setHeaderText("Change Group Name");
 
+            ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+
+            GridPane grid = new GridPane();
+            TextField nameField = new TextField();
+            nameField.setPromptText("Name");
+
+            grid.add(new Label("Name:"), 0, 0);
+            grid.add(nameField, 1, 0);
+
+            dialog.getDialogPane().setContent(grid);
+            dialog.getDialogPane().getStylesheets().add(dialogCSS);
+
+            dialog.setResultConverter(buttonType -> {
+                if (buttonType == saveButtonType) {
+                    if (!nameField.getText().isEmpty()){
+                        String newGroupName = nameField.getText();
+                        selectedGroup.setGroupName(newGroupName);
+                        System.out.println("Updated group name to: " + newGroupName);
+                    }
+                }
+                return null;
+            });
+
+            dialog.showAndWait();
+
+            mainController.updateDashboard();
+        } else {
+            System.out.println("No group selected for editing.");
+        }
     }
 
     @FXML public void handleDeleteGroupButton() {
