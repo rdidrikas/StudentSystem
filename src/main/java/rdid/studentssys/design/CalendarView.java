@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 
+import rdid.studentssys.model.AttendanceManager;
 import rdid.studentssys.model.Student;
 
 import java.time.LocalDate;
@@ -26,7 +27,7 @@ public class CalendarView extends GridPane {
 
     public CalendarView(Student student) {
         this.student = student;
-        // attendanceMap = AttendanceManager.getInstance().loadAttendance(student.getId());
+        attendanceMap = AttendanceManager.getInstance().loadAttendance(student.getId());
         generateCalendar(student);
     }
 
@@ -47,8 +48,18 @@ public class CalendarView extends GridPane {
         // Create buttons for each day
         for (int day = 1; day <= numDays; day++) {
             Button dayButton = new Button(String.valueOf(day));
-            dayButton.getStyleClass().add("day-button-unmarked");
-            dayButton.setOnAction(e -> toggleButton(dayButton));  // Event handling for attendance marking
+            switch (attendanceMap.getOrDefault(LocalDate.of(firstDayOfMonth.getYear(), firstDayOfMonth.getMonth(), day), AttendanceStatus.UNMARKED)) {
+                case PRESENT:
+                    dayButton.getStyleClass().add("day-button-present");
+                    break;
+                case ABSENT:
+                    dayButton.getStyleClass().add("day-button-absent");
+                    break;
+                default:
+                    dayButton.getStyleClass().add("day-button-unmarked");
+            }
+            int finalDay = day;
+            dayButton.setOnAction(e -> toggleButton(dayButton, LocalDate.of(firstDayOfMonth.getYear(), firstDayOfMonth.getMonth(), finalDay)));  // Event handling for attendance marking
             this.add(dayButton, (startDay + day - 1) % 7, 1 + (startDay + day - 1) / 7);
         }
     }
@@ -58,19 +69,19 @@ public class CalendarView extends GridPane {
         System.out.println("Attendance marked for day " + day);
     }
 
-    private void toggleButton(Button button) {
+    private void toggleButton(Button button, LocalDate date) {
         if (button.getStyleClass().contains("day-button-unmarked")) {
             button.getStyleClass().remove("day-button-unmarked");
             button.getStyleClass().add("day-button-present");
-            attendanceMap.put(LocalDate.now(), AttendanceStatus.PRESENT);
+            attendanceMap.put(date, AttendanceStatus.PRESENT);
         } else if (button.getStyleClass().contains("day-button-present")) {
             button.getStyleClass().remove("day-button-present");
             button.getStyleClass().add("day-button-absent");
-            attendanceMap.put(LocalDate.now(), AttendanceStatus.ABSENT);
+            attendanceMap.put(date, AttendanceStatus.ABSENT);
         } else {
             button.getStyleClass().remove("day-button-absent");
             button.getStyleClass().add("day-button-unmarked");
-            attendanceMap.put(LocalDate.now(), AttendanceStatus.UNMARKED);
+            attendanceMap.put(date, AttendanceStatus.UNMARKED);
         }
     }
 

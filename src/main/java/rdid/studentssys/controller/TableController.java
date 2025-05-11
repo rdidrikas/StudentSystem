@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import rdid.studentssys.data.SaveAttendance;
 import rdid.studentssys.design.CalendarView;
 import rdid.studentssys.model.Student;
 import rdid.studentssys.model.StudentManager;
@@ -36,8 +37,9 @@ public class TableController extends Utils {
     @FXML private GridPane calendarGrid;
 
     private final ObservableList<Student> students = FXCollections.observableArrayList();
-    ChangeListener<Student> selectionListener;
+    private ChangeListener<Student> selectionListener;
     private boolean actionMenuToggled = false;
+    private CalendarView calendar;
 
     private HomeController mainController;
 
@@ -52,7 +54,10 @@ public class TableController extends Utils {
         toggleVisibility(attendancePane);
         toggleVisibility(mainController.getMainHeader());
         Student student = studentTable.getSelectionModel().getSelectedItem();
-        CalendarView calendar = new CalendarView(student);
+
+        calendarGrid.getChildren().clear();
+
+        calendar = new CalendarView(student);
         calendarGrid.getChildren().add(calendar);
 
         calendarName.setText("Attendance for " + student.getName() + " " + student.getSurname() );
@@ -111,7 +116,17 @@ public class TableController extends Utils {
     }
 
     @FXML public void handleSaveAttendance(){
-
+        Student selectedStudent = studentTable.getSelectionModel().getSelectedItem();
+        if (selectedStudent != null) {
+            int id = selectedStudent.getId();
+            String filePath = "src/main/resources/data/attendance/student" + id + ".csv";
+            SaveAttendance saveAttendance = new SaveAttendance(filePath);
+            saveAttendance.setAttendanceMap(calendar.getAttendanceMap());
+            saveAttendance.saveData();
+            System.out.println("Attendance saved for student: " + selectedStudent.getName());
+        } else {
+            System.out.println("No student selected for saving attendance.");
+        }
     }
 
 

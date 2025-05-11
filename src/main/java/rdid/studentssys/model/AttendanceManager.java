@@ -44,8 +44,7 @@ public class AttendanceManager {
                 attendanceMap.put(date, attendanceStatus);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            System.out.println("Error loading attendance data: " + e.getMessage());
         }
 
         return attendanceMap;
