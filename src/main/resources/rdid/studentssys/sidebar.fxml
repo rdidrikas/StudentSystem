@@ -26,7 +26,6 @@
             <children>
                 <Button fx:id="AddStudentButton" minWidth="150" onAction="#handleAddStudentButton" text="Add Student" />
                 <Button fx:id="ViewStudentsButton" minWidth="150" onAction="#handleViewStudentButton" text="View Students" />
-                <Button minWidth="150" onAction="#handleEditStudentsButton" text="Edit Students" />
             </children>
         </VBox>
         <Button onAction="#toggleGroupsMenu" text="Groups" />
@@ -35,9 +34,8 @@
                 <Insets left="20.0" />
             </padding>
             <children>
-                <Button minWidth="150" onAction="#handleAddGroupButton" text="Add Groups" />
-                <Button minWidth="150" onAction="#handleViewGroupsButton" text="View Groups" />
-                <Button minWidth="150" onAction="#handleEditGroupsButton" text="Edit Groups" />
+                <Button fx:id="AddGroupButton" minWidth="150" onAction="#handleAddGroupButton" text="Add Groups" />
+                <Button fx:id="ViewGroupsButton" minWidth="150" onAction="#handleViewGroupsButton" text="View Groups" />
             </children>
         </VBox>
         <Button onAction="#toggleImportMenu" text="Import Data" />

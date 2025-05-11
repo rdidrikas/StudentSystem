@@ -11,7 +11,7 @@
     -fx-text-fill: white;
     -fx-background-color: transparent;
     -fx-border-color: white;
-    -fx-border-radius: 5;
+    -fx-border-radius: 4;
     -fx-font-size: 15;
 }
 
@@ -97,6 +97,34 @@
     -fx-font-size: 30;
     -fx-font-weight: bold;
     -fx-padding: 10;
+}
+
+.dialog-pane {
+    -fx-background-color: #59080d;
+    -fx-border-color: #59080d;
+    -fx-border-width: 2px;
+    -fx-font-family: "Segoe UI";
+}
+
+.dialog-pane .content.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #59080d;
+}
+
+.dialog-pane .header-panel .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.dialog-pane .button-bar .button {
+    -fx-background-color: #050202;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
 }
 
 #HomeName {

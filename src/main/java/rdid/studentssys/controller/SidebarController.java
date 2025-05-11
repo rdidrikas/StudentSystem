@@ -9,6 +9,8 @@ import javafx.stage.StageStyle;
 import rdid.studentssys.data.CSVhandler;
 import rdid.studentssys.data.SaveStudents;
 import rdid.studentssys.design.CalendarView;
+import rdid.studentssys.model.Group;
+import rdid.studentssys.model.GroupManager;
 import rdid.studentssys.model.Student;
 
 import java.util.Optional;
@@ -119,29 +121,48 @@ public class SidebarController extends Utils {
 
     }
 
-    @FXML public void handleEditStudentsButton() {
-        // Handle manage groups button click
-        System.out.println("Manage Groups button clicked");
-    }
-
     @FXML public void handleViewStudentButton() {
         mainController.getTableController().handleViewStudentButton();
     }
 
     @FXML public void handleAddGroupButton() {
-        // Handle add group button click
-        System.out.println("Add Group button clicked");
+
+        Dialog<Group> dialog = new Dialog<>();
+        dialog.setTitle("Add Group");
+        dialog.setHeaderText("Enter Group Name");
+
+        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        TextField nameField = new TextField();
+        nameField.setPromptText("Name");
+
+        grid.add(new Label("Name:"), 0, 0);
+        grid.add(nameField, 1, 0);
+
+        dialog.getDialogPane().setContent(grid);
+        dialog.getDialogPane().getStylesheets().add(dialogCSS);
+
+        dialog.setResultConverter(buttonType -> {
+            if (buttonType == saveButtonType) {
+                if (nameField.getText().isEmpty()){
+                    System.out.println("Group name cannot be empty");
+                    handleAddGroupButton(); // Prompt the user again
+                }
+                GroupManager.getInstance().createGroup(nameField.getText());
+            }
+            return null;
+        });
+
+        dialog.showAndWait();
+
         mainController.updateDashboard();
     }
 
     @FXML public void handleViewGroupsButton(){
         // Handle view group button click
         System.out.println("View Group button clicked");
-    }
-
-    @FXML public void handleEditGroupsButton() {
-        // Handle manage groups button click
-        System.out.println("Manage Groups button clicked");
     }
 
     @FXML public void handleImportCSVStudents(){
