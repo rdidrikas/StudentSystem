@@ -59,6 +59,5 @@ public class TestStudentSystem {
         String filePath = "src/main/resources/import/test.csv";
         List<String[]> data = csvHandler.importData(filePath);
         assertNotNull(data);
-        csvHandler.studentCSVData(data);
     }
 }

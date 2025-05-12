@@ -11,10 +11,10 @@ import java.util.List;
 public interface ImportExport {
     List<String[]> importData(String filePath);
     // void exportData(String filePath);
-    default void studentCSVData(List<String[]> data) {
+    default void studentCSVData(List<String[]> data, boolean forceID) {
         for (String[] row : data) {
             try {
-                Integer.parseInt(row[0]);
+                int id = Integer.parseInt(row[0]);
                 String name = row[1];
                 String surname = row[2];
                 String email = row[3];
@@ -24,9 +24,17 @@ public interface ImportExport {
                     System.out.println("Group: " + groupArr[i]);
                 }
                 if(groupArr.length == 0) {
-                    StudentManager.getInstance().addStudent(new Student(name, surname, email));
+                    if (forceID) {
+                        StudentManager.getInstance().addStudent(new Student(id, name, surname, email)); // ID is forced, setting ID when loading
+                    } else {
+                        StudentManager.getInstance().addStudent(new Student(name, surname, email));
+                    }
                 } else {
-                    StudentManager.getInstance().addStudent(new Student(name, surname, email, groupArr));
+                    if (forceID) {
+                        StudentManager.getInstance().addStudent(new Student(id, name, surname, email, groupArr)); // ID is forced, setting ID when loading
+                    } else {
+                        StudentManager.getInstance().addStudent(new Student(name, surname, email, groupArr));
+                    }
                 }
             } catch (NumberFormatException e) {
                 String name = row[0];

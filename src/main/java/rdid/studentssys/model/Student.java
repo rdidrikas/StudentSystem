@@ -76,6 +76,20 @@ public class Student {
             ControllerLocator.getHomeController().updateDashboard();
         }
     }
+    public Student(int id, String name, String surname, String email) {
+        if(!StudentManager.getInstance().alreadyHere(name, surname, email)) { // No duplicates
+            this.id = id;
+            this.ids.add(id);
+            this.name = name;
+            this.surname = surname;
+            this.email = email;
+            this.groups = new ArrayList<>();
+            GroupManager.getInstance().getDefaultGroup().addStudent(this); // Adding student to default group and add default group to groups
+            this.groups.add(GroupManager.getInstance().getDefaultGroup());
+            StudentManager.getInstance().addStudent(this);
+            ControllerLocator.getHomeController().updateDashboard();
+        }
+    }
 
     public void markAttendance(LocalDate date, boolean present) {
         if (attendance == null) {

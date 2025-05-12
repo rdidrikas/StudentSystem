@@ -180,7 +180,7 @@ public class SidebarController extends Utils {
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(fileName -> {
             CSVhandler csvHandler = new CSVhandler();
-            csvHandler.studentCSVData(csvHandler.importData("src/main/resources/import/" + fileName));
+            csvHandler.studentCSVData(csvHandler.importData("src/main/resources/import/" + fileName), false);
         });
     }
 
@@ -193,7 +193,7 @@ public class SidebarController extends Utils {
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(fileName -> {
             Excelhandler excelhandler = new Excelhandler();
-            excelhandler.studentCSVData(excelhandler.importData("src/main/resources/import/" + fileName));
+            excelhandler.studentCSVData(excelhandler.importData("src/main/resources/import/" + fileName), false);
         });
     }
 

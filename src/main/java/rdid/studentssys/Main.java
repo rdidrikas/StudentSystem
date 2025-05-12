@@ -43,7 +43,7 @@ public class Main extends Application {
         ControllerLocator.setHomeController(homeController);
 
         CSVhandler csvHandler = new CSVhandler();
-        csvHandler.studentCSVData(csvHandler.importData("src/main/resources/data/students.csv")); // loading data
+        csvHandler.studentCSVData(csvHandler.importData("src/main/resources/data/students.csv"), true); // loading data
 
         // Add the scene to the stage
         primaryStage.setScene(scene);
