@@ -77,7 +77,6 @@
                     </padding>
                     <children>
                         <Button minWidth="150" onAction="#handleExportCSVStudents" text="Export Students" />
-                        <Button minWidth="150" onAction="#handleExportCSVGroups" text="Export Groups" />
                     </children>
                 </VBox>
                 <Button minWidth="150" onAction="#toggleExportExcelMenu" text="Export with Excel" />
@@ -87,7 +86,6 @@
                     </padding>
                     <children>
                         <Button minWidth="150" onAction="#handleExportExcelStudents" text="Export Students" />
-                        <Button minWidth="150" onAction="#handleExportExcelGroups" text="Export Groups" />
                     </children>
                 </VBox>
             </children>

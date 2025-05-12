@@ -28,10 +28,14 @@
     -fx-text-fill: #c3c0d1;
 }
 
-.table-row-cell {
-    -fx-background-color: transparent; /* or set a color like #2a2a2a */
-    -fx-text-fill: white;
+.table-row-cell:even {
+    -fx-background-color: #585461;
 }
+
+.table-row-cell:odd {
+    -fx-background-color: #545b61;
+}
+
 
 .table-row-cell:filled:selected, .table-row-cell:filled:selected:hover {
     -fx-background-color: transparent;

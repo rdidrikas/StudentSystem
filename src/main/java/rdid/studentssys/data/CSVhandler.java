@@ -26,10 +26,5 @@ public class CSVhandler implements ImportExport {
         }
     }
 
-    @Override
-    public void exportData(String filePath) {
-        System.out.println("Exporting data to " + filePath);
-    }
-
 
 }

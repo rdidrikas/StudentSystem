@@ -8,6 +8,7 @@ module rdid.studentssys {
     requires com.opencsv;
     requires org.apache.poi.poi;
     requires org.apache.poi.ooxml;
+    requires org.apache.pdfbox;
 
     opens rdid.studentssys to javafx.fxml;
     exports rdid.studentssys;

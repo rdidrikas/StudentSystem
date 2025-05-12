@@ -43,6 +43,9 @@
                 <Label fx:id="monthLabel" />
                 <Button fx:id="nextMonthBtn" text="›" />
             </HBox>
+            <Button layoutX="500" layoutY="375" onAction="#handleExportCSVAttendance" text="Export CSV" />
+            <Button layoutX="600" layoutY="375" onAction="#handleExportExcelAttendance" text="Export Excel" />
+            <Button layoutX="700" layoutY="375" onAction="#handleExportPDFAttendance" text="Export PDF"/>
         </HBox>
     </VBox>
     <VBox fx:id="groupsContentPane" spacing="10" visible="false" managed="false">

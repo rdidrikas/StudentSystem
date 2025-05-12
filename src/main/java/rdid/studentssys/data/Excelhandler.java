@@ -1,5 +1,9 @@
 package rdid.studentssys.data;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -48,8 +52,32 @@ public class Excelhandler implements ImportExport {
         return null;
     }
 
-    @Override
-    public void exportData(String filePath) {
-        System.out.println("Exporting data to " + filePath);
+     public void convertCsvToExcel(String csvPath, String excelPath) {
+        try (BufferedReader br = new BufferedReader(new FileReader(csvPath));
+             XSSFWorkbook workbook = new XSSFWorkbook()) {
+
+            Sheet sheet = workbook.createSheet("Students");
+            String line;
+            int rowNum = 0;
+
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                Row row = sheet.createRow(rowNum++);
+
+                for (int colNum = 0; colNum < values.length; colNum++) {
+                    Cell cell = row.createCell(colNum);
+                    cell.setCellValue(values[colNum]);
+                }
+            }
+
+            try (FileOutputStream out = new FileOutputStream(excelPath)) {
+                workbook.write(out);
+            }
+
+            System.out.println("Conversion complete: " + excelPath);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

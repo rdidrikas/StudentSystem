@@ -1,6 +1,9 @@
 package rdid.studentssys.controller;
 
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -14,7 +17,10 @@ import rdid.studentssys.model.Group;
 import rdid.studentssys.model.GroupManager;
 import rdid.studentssys.model.Student;
 
+import java.time.LocalDate;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class SidebarController extends Utils {
 
@@ -192,24 +198,36 @@ public class SidebarController extends Utils {
     }
 
     @FXML public void handleExportCSVStudents() {
-        // Handle export data button click
-        System.out.println("Export Students button clicked");
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle("Export Students CSV");
+        dialog.setContentText("File name:");
+        dialog.setHeaderText(null);
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(fileName -> {
+            SaveStudents saveStudents = new SaveStudents("src/main/resources/export/" + fileName + ".csv");
+            saveStudents.saveData();
+        });
     }
 
     @FXML public void handleExportExcelStudents() {
-        // Handle export data button click
-        System.out.println("Export Students button clicked");
+        SaveStudents saveStudents = new SaveStudents("src/main/resources/data/students.csv");
+        saveStudents.saveData(); // Save data before exporting
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle("Export Students Excel");
+        dialog.setContentText("File name:");
+        dialog.setHeaderText(null);
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(fileName -> {
+            Excelhandler excelhandler = new Excelhandler();
+            excelhandler.convertCsvToExcel("src/main/resources/data/students.csv", "src/main/resources/export/" + fileName + ".xlsx");
+        });
     }
 
-    @FXML public void handleExportCSVGroups() {
-        // Handle export data button click
-        System.out.println("Export Groups button clicked");
-    }
 
-    @FXML public void handleExportExcelGroups() {
-        // Handle export data button click
-        System.out.println("Export Groups button clicked");
-    }
+
+
 
     @FXML public void saveData() {
         // Handle save data button click
@@ -218,3 +236,5 @@ public class SidebarController extends Utils {
         saveStudents.saveData();
     }
 }
+
+

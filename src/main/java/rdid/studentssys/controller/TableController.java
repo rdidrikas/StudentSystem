@@ -6,12 +6,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.CheckComboBox;
 import org.junit.FixMethodOrder;
+import rdid.studentssys.data.Excelhandler;
+import rdid.studentssys.data.PDFattendance;
 import rdid.studentssys.data.SaveAttendance;
 import rdid.studentssys.design.CalendarView;
 import rdid.studentssys.model.Group;
@@ -19,8 +23,13 @@ import rdid.studentssys.model.GroupManager;
 import rdid.studentssys.model.Student;
 import rdid.studentssys.model.StudentManager;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class TableController extends Utils {
 
@@ -49,6 +58,8 @@ public class TableController extends Utils {
     @FXML private GridPane calendarGrid;
 
     private String dialogCSS = getClass().getResource("/rdid/studentssys/css/styles.css").toExternalForm();
+    private String exportFileName;
+    private Map<LocalDate, CalendarView.AttendanceStatus> exportAttendanceMap;
 
     private final ObservableList<Student> students = FXCollections.observableArrayList();
     private final ObservableList<Group> groups = FXCollections.observableArrayList();
@@ -348,6 +359,107 @@ public class TableController extends Utils {
         mainController.updateDashboard();
     }
 
+    @FXML public void handleExportCSVAttendance() {
+        exportDialog();
+        if (exportFileName == null || exportAttendanceMap == null) {
+            System.out.println("Incorrect file name or attendance map");
+            return;
+        }
+        SaveAttendance saveAttendance = new SaveAttendance("src/main/resources/export/" + exportFileName + ".csv");
+        saveAttendance.setAttendanceMap(exportAttendanceMap);
+        saveAttendance.saveData();
+        exportFileName = null;
+        exportAttendanceMap = null;
+    }
+
+    @FXML public void handleExportExcelAttendance() {
+        exportDialog();
+        if (exportFileName == null || exportFileName.isEmpty()) {
+            System.out.println("No file name provided");
+            return;
+        }
+        handleSaveAttendance(); // Save as CSV first
+        String csvPath = "src/main/resources/data/attendance/student" + studentTable.getSelectionModel().getSelectedItem().getId() + ".csv";
+        String excelPath = "src/main/resources/export/" + exportFileName + ".xlsx";
+        Excelhandler excelHandler = new Excelhandler();
+        excelHandler.convertCsvToExcel(csvPath, excelPath);
+        exportFileName = null;
+        exportAttendanceMap = null;
+    }
+
+    @FXML public void handleExportPDFAttendance() throws IOException {
+        exportDialog();
+        if (exportFileName == null || exportFileName.isEmpty()) {
+            System.out.println("No file name provided");
+            return;
+        }
+        handleSaveAttendance(); // Save as CSV first
+        String csvPath = "src/main/resources/data/attendance/student" + studentTable.getSelectionModel().getSelectedItem().getId() + ".csv";
+        String excelPath = "src/main/resources/export/" + exportFileName + ".pdf";
+        PDFattendance.convertCsvToPdf(csvPath, excelPath);
+        exportFileName = null;
+        exportAttendanceMap = null;
+    }
+
+    public void exportDialog() {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Export Attendance");
+        dialog.setHeaderText("Enter file name and date range");
+
+
+        ButtonType exportType = new ButtonType("Export", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(exportType, ButtonType.CANCEL);
+
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20));
+
+        TextField fileNameField = new TextField();
+        DatePicker fromDate = new DatePicker();
+        DatePicker toDate   = new DatePicker();
+
+        grid.add(new Label("File name:"), 0, 0);
+        grid.add(fileNameField,       1, 0);
+        grid.add(new Label("From:"),  0, 1);
+        grid.add(fromDate,            1, 1);
+        grid.add(new Label("To:"),    0, 2);
+        grid.add(toDate,              1, 2);
+
+        dialog.getDialogPane().setContent(grid);
+
+        Node exportBtn = dialog.getDialogPane().lookupButton(exportType);
+        exportBtn.setDisable(true);
+        ChangeListener<Object> validator = (o, a, b) -> {
+            exportBtn.setDisable(
+                    fileNameField.getText().trim().isEmpty() ||
+                            fromDate.getValue() == null ||
+                            toDate.getValue() == null ||
+                            toDate.getValue().isBefore(fromDate.getValue())
+            );
+        };  // Only enable the button if all fields are filled correctly
+
+        fileNameField.textProperty().addListener(validator);
+        fromDate.valueProperty().addListener(validator);
+        toDate.valueProperty().addListener(validator);
+
+
+        Optional<ButtonType> res = dialog.showAndWait();
+        if (res.isPresent() && res.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+            String fileName = fileNameField.getText().trim();
+            LocalDate from  = fromDate.getValue();
+            LocalDate to    = toDate.getValue();
+
+            // Filter the atendance map based on the date range
+            Map<LocalDate, CalendarView.AttendanceStatus> filtered = calendar.getAttendanceMap().entrySet().stream()
+                    .filter(e -> !e.getKey().isBefore(from) && !e.getKey().isAfter(to))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+            exportFileName = fileName;
+            exportAttendanceMap = filtered;
+        }
+    }
 
     public Button getPrevMonthBtn() {
         return prevMonthBtn;

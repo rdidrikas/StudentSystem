@@ -14,12 +14,16 @@ public class Student {
     private String email;
     private List<Group> groups;
     private Map<LocalDate, Boolean> attendance;
+    private List<Integer> ids = new ArrayList<>();
 
     private static List<Student> students = new ArrayList<>();
 
     public Student(String name, String surname, String email) {
         if(!StudentManager.getInstance().alreadyHere(name, surname, email)) { // No duplicates
-            this.id = ++idCounter;
+            while (!ids.contains(++idCounter)) {
+                this.id = idCounter;
+            }
+            this.ids.add(id);
             this.name = name;
             this.surname = surname;
             this.email = email;
@@ -32,7 +36,30 @@ public class Student {
 
     public Student(String name, String surname, String email, String[] groupArr) {
         if(!StudentManager.getInstance().alreadyHere(name, surname, email)) { // No duplicates
-            this.id = ++idCounter;
+            while (!ids.contains(++idCounter)) {
+                this.id = idCounter;
+            }
+            this.ids.add(id);
+            this.name = name;
+            this.surname = surname;
+            this.email = email;
+            this.groups = new ArrayList<>();
+            for(String group : groupArr) {
+                if(GroupManager.getInstance().getGroupByName(group) != null) {
+                    GroupManager.getInstance().getGroupByName(group).addStudent(this);
+                } else {
+                    GroupManager.getInstance().createGroup(group);
+                    GroupManager.getInstance().getGroupByName(group).addStudent(this);
+                }
+            }
+            StudentManager.getInstance().addStudent(this);
+            ControllerLocator.getHomeController().updateDashboard();
+        }
+    }
+    public Student(int id, String name, String surname, String email, String[] groupArr) {
+        if(!StudentManager.getInstance().alreadyHere(name, surname, email)) { // No duplicates
+            this.id = id;
+            this.ids.add(id);
             this.name = name;
             this.surname = surname;
             this.email = email;

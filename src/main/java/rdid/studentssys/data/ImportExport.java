@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ImportExport {
     List<String[]> importData(String filePath);
-    void exportData(String filePath);
+    // void exportData(String filePath);
     default void studentCSVData(List<String[]> data) {
         for (String[] row : data) {
             try {

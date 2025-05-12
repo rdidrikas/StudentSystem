@@ -33,7 +33,7 @@ public class Main extends Application {
         Parent root = loader.load();
 
         // Create the scene
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, 900, 600);
         // scene.getStylesheets().add(getClass().getResource("/rdid/studentssys/css/styles.css").toExternalForm());
 
         // Set window title
