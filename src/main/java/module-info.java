@@ -6,6 +6,8 @@ module rdid.studentssys {
     requires org.kordamp.bootstrapfx.core;
     requires junit;
     requires com.opencsv;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
 
     opens rdid.studentssys to javafx.fxml;
     exports rdid.studentssys;

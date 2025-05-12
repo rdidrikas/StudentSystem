@@ -11,3 +11,6 @@ ID,Name,Surname,Email,Group(s)
 10,David,Lee,david.lee@example.com,Math,Science,Art
 11,Ava,Walker,ava.walker@example.com,Default Group
 12,Vilte,Venckute,a@a.c,Medicine
+13,John,Doe,john.doe@mail.com,Group A
+14,Jane,Smith,jane.smith@mail.lt,Group A
+15,Tomas,Petrauskas,tomas@mail.com,Group B

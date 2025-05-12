@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.StageStyle;
 import rdid.studentssys.data.CSVhandler;
+import rdid.studentssys.data.Excelhandler;
 import rdid.studentssys.data.SaveStudents;
 import rdid.studentssys.design.CalendarView;
 import rdid.studentssys.model.Group;
@@ -178,8 +179,16 @@ public class SidebarController extends Utils {
     }
 
     @FXML public void handleImportExcelStudents(){
-        // Handle import students button click
-        System.out.println("Import Students button clicked");
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle("Import Students Excel");
+        dialog.setContentText("File name:");
+        dialog.setHeaderText(null);
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(fileName -> {
+            Excelhandler excelhandler = new Excelhandler();
+            excelhandler.studentCSVData(excelhandler.importData("src/main/resources/import/" + fileName));
+        });
     }
 
     @FXML public void handleExportCSVStudents() {
