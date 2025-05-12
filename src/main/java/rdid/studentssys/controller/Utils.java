@@ -27,23 +27,23 @@ abstract public class Utils {
 
         if (menuVisible) {
             slideTransition.setToX(-menu.getWidth()); // move it left
-            slideTransition.setOnFinished(event -> {
+            fadeTransition.setToValue(0.0);
+            fadeTransition.setFromValue(1.0);
+            // Hide menu after fade out
+            fadeTransition.setOnFinished(event -> {
                 menu.setVisible(false);
                 menu.setManaged(false);
             });
-            fadeTransition.setToValue(0);
-            fadeTransition.setOnFinished(event -> {
-                menu.setVisible(false);
-            });
         } else {
             // Prepare menu first
-            menu.setTranslateX(-menu.getWidth()); // start off-screen
+            double width = menu.getBoundsInParent().getWidth(); // forces to calculate width and the anim correctly works
+            menu.setTranslateX(-width); // start off-screen
             menu.setVisible(true);
             menu.setManaged(true);
-            menu.setOpacity(0);
             // Slide menu in
             slideTransition.setToX(0); // move to normal position
-            fadeTransition.setToValue(1);
+            fadeTransition.setFromValue(0.0);
+            fadeTransition.setToValue(1.0);
         }
 
         slideTransition.play();
