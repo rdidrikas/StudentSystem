@@ -20,10 +20,10 @@ public class Student {
 
     public Student(String name, String surname, String email) {
         if(!StudentManager.getInstance().alreadyHere(name, surname, email)) { // No duplicates
-            while (!ids.contains(++idCounter)) {
-                this.id = idCounter;
+            while (ids.contains(idCounter)) {
+                idCounter++;
             }
-            this.ids.add(id);
+            this.id = idCounter;
             this.name = name;
             this.surname = surname;
             this.email = email;
@@ -36,9 +36,10 @@ public class Student {
 
     public Student(String name, String surname, String email, String[] groupArr) {
         if(!StudentManager.getInstance().alreadyHere(name, surname, email)) { // No duplicates
-            while (!ids.contains(++idCounter)) {
-                this.id = idCounter;
+            while (ids.contains(idCounter)) {
+                idCounter++;
             }
+            this.id = idCounter;
             this.ids.add(id);
             this.name = name;
             this.surname = surname;

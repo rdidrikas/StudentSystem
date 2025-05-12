@@ -62,8 +62,8 @@ public class GroupManager {
 
     public void deleteGroup(Group group){
         if (group != null) {
-            allGroups.remove(group);
-            for (Student student : group.getStudents()) {
+            List<Student> students = group.getStudents();
+            for (Student student : students) {
                 // Remove student from the group and add to default group
                 group.removeStudent(student);
                 student.removeGroup(group);
@@ -71,6 +71,7 @@ public class GroupManager {
                     defaultGroup.addStudent(student);
                 }
             }
+            allGroups.remove(group);
             String groupName = group.getGroupName();
             group = null; // Clear reference
             System.out.println("Group deleted successfully: " + groupName);
