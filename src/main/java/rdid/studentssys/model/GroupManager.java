@@ -72,7 +72,7 @@ public class GroupManager {
                 }
             }
             allGroups.remove(group);
-            String git stautgroupName = group.getGroupName();
+            String groupName = group.getGroupName();
             group = null; // Clear reference
             System.out.println("Group deleted successfully: " + groupName);
         } else {
