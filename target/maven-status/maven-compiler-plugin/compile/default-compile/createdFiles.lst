@@ -1,0 +1,14 @@
+rdid\studentssys\Main.class
+rdid\studentssys\design\CalendarView$AttendanceStatus.class
+module-info.class
+rdid\studentssys\data\CSVhandler.class
+rdid\studentssys\TestStudentSystem.class
+rdid\studentssys\design\CalendarView.class
+rdid\studentssys\model\Student.class
+rdid\studentssys\controller\SidebarController.class
+rdid\studentssys\controller\Utils.class
+rdid\studentssys\model\Group.class
+rdid\studentssys\controller\HomeController.class
+rdid\studentssys\controller\ControllerLocator.class
+rdid\studentssys\data\ImportExport.class
+rdid\studentssys\controller\TableController.class
